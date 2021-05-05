@@ -1,0 +1,6 @@
+{
+  "configProperties": {
+    "Tracing": true,
+    "DeadlockTestEnabled": false
+  }
+}
