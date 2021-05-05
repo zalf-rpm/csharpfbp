@@ -7,8 +7,10 @@ namespace FBPLib
     using System.IO;
     using System.Threading;
     using Spring.Threading.Helpers;   // CountDownLatch  
+    using System.Threading.Tasks;
+
     //  using System.Text.RegularExpressions;
-    
+
     //using Settings;
 
     /// <summary> The abstract class which all flow Networks extend directly or
@@ -565,8 +567,69 @@ namespace FBPLib
 
             _mainthread.Start();
         }
+        public Task GoA()
+        {
+            Type t = this.GetType();
+            Name = t.FullName;
 
-        
+            _network = this;
+
+            DateTime now = DateTime.Now;
+
+            InitBlock();
+            var task = Task.Run(() =>
+            {
+                try
+                {
+                    CallDefine();
+                    bool res = true;
+                    foreach (Component comp in _components.Values)
+                    {
+                        res &= comp.CheckPorts();
+                    }
+                    if (!res)
+                        FlowError.Complain("One or more mandatory connections have been left unconnected: " + Name);
+
+                    _cdl = new CountDownLatch(_components.Count);
+
+
+                    Trace(Name + ": run started");
+                    _active = true;
+
+                    Initiate();
+
+                    WaitForAll();
+                }
+                catch (FlowError e)
+                {
+                    string s = "Flow Error :" + e;
+
+                    Console.Out.WriteLine("Network: " + s);
+                    Console.Out.Flush();
+                    // rethrow the exception for external error handling
+                    // in case of a deadlock: deadlock is the cause
+                    throw e;
+                }
+
+                if (_error != null)
+                {
+                    // throw the exception which caused the network to stop
+                    throw _error;
+                }
+
+                TimeSpan duration = DateTime.Now - now;
+
+                Console.Out.WriteLine("{0} - run time: {1}", Name, duration);
+
+                Console.Out.WriteLine("Counts: C: {0}, D: {1}, S: {2}, R (non-null): {3}, DO: {4}", creates, drops, sends, receives, dropOlds);
+                CloseTraceFiles();
+
+            });
+
+            return task;
+        }
+
+
         protected internal void Initialize(object param, string receiver)
         {
             string r1, r2;

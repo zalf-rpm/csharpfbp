@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\TestCases\Concord\resources\fake_latin.txt" Link="fake_latin.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\mas-infrastructure\capnproto_schemas\capnproto_schemas_csharp.csproj" />
+    <ProjectReference Include="..\..\mas-infrastructure\src\csharp\common\common.csproj" />
+    <ProjectReference Include="..\FBPLibCore\FBPLibCore.csproj" />
+    <ProjectReference Include="..\FBPVerbsCore\FBPVerbsCore.csproj" />
+    <ProjectReference Include="..\TestNetworkCore\TestNetworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

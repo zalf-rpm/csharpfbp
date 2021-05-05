@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="resources\fake_cyrillic.txt" />
+    <None Remove="resources\fake_japanese.txt" />
+    <None Remove="resources\fake_latin.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\fake_cyrillic.txt" />
+    <Content Include="resources\fake_japanese.txt" />
+    <Content Include="resources\fake_latin.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FBPLibCore\FBPLibCore.csproj" />
+    <ProjectReference Include="..\FBPVerbsCore\FBPVerbsCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
