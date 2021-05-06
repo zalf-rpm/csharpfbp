@@ -58,8 +58,6 @@ namespace FBPLib
            * this License may be found at http://www.jpaulmorrison.com/fbp/artistic2.htm. 
            * THERE IS NO WARRANTY; USE THIS PRODUCT AT YOUR OWN RISK.
            * */
-
-
         protected internal static int DEBUGSIZE = 1;
 
         protected internal static int PRODUCTIONSIZE = 10;

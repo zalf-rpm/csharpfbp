@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mas.Rpc;
 using Capnp.Rpc;
 using FBPLib;
+using Common = Mas.Infrastructure.Common;
 
 namespace UnitTests
 {
@@ -17,7 +18,8 @@ namespace UnitTests
         IInputPort _sturdyRefPort;
         string _sturdyRef = "capnp://login01.cluster.zalf.de:11002";
         OutputPort _outPort;
-        Mas.Infrastructure.Common.ConnectionManager _conMan = new();
+
+        private Common.ConnectionManager ConMan() => (_network as CapabilityNetwork)?.ConMan;
 
         public override void Execute()
         {
@@ -31,11 +33,14 @@ namespace UnitTests
 
             try
             {
-                var timeSeries = _conMan.Connect<Mas.Rpc.Climate.ITimeSeries>(_sturdyRef).Result;
-                var header = timeSeries.Header().Result;
-                var hl = header.Select(h => h.ToString()).ToList();
-                Console.WriteLine(hl.Aggregate((a, v) => a + " | " + v));
-                p = Create(hl);
+                if (ConMan() == null) return;
+
+                using var timeSeries = ConMan().Connect<Mas.Rpc.Climate.ITimeSeries>(_sturdyRef).Result;
+                //var header = timeSeries.Header().Result;
+                //var hl = header.Select(h => h.ToString()).ToList();
+                //Console.WriteLine(hl.Aggregate((a, v) => a + " | " + v));
+                //p = Create(hl);
+                p = Create(Capnp.Rpc.Proxy.Share(timeSeries));
                 _outPort.Send(p);
             }
             catch (RpcException e) { Console.WriteLine(e.Message); }
@@ -49,7 +54,6 @@ namespace UnitTests
 
         public void Dispose()
         {
-            _conMan?.Dispose();
         }
     }
 }
