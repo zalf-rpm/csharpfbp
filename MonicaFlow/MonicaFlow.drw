@@ -1,0 +1,18 @@
+<?xml version="1.0"?> 
+ <drawfbp_file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="https://github.com/jpaulm/drawfbp/blob/master/lib/drawfbp_file.xsd">
+<net>
+<desc>Click anywhere on selection area</desc>
+ <blocks><block> <x> 316 </x> <y> 348 </y> <id> 1 </id> <type>B</type> <width>92</width> <height>64</height> <description>CapSrc</description> <compname>CapabilitySource.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/UnitTestCore/CapabilitySource.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 650 </x> <y> 350 </y> <id> 2 </id> <type>B</type> <width>92</width> <height>64</height> <description>CapUse</description> <compname>CapabilityUse.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/UnitTestCore/CapabilityUse.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 959 </x> <y> 348 </y> <id> 3 </id> <type>B</type> <width>92</width> <height>64</height> <description>WriteConsole</description> <compname>WriteToConsole.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/FBPVerbsCore/FBPComponents/WriteToConsole.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 308 </x> <y> 168 </y> <id> 4 </id> <type>I</type> <width>188</width> <height>29</height> <description>capnp://localhost:11002</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+</blocks> <connections>
+<connection> <fromx>316</fromx> <fromy>182</fromy> <tox>316</tox> <toy>316</toy> <fromid>4</fromid> <toid>1</toid> <id>1</id> <endsatline>false</endsatline><downstreamport>SR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>362</fromx> <fromy>351</fromy> <tox>604</tox> <toy>351</toy> <fromid>1</fromid> <toid>2</toid> <id>2</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>696</fromx> <fromy>347</fromy> <tox>913</tox> <toy>347</toy> <fromid>2</fromid> <toid>3</toid> <id>3</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+</connections> </net> </drawfbp_file>
