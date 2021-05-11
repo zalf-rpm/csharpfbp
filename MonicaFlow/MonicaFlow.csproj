@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\mas-infrastructure\capnproto_schemas\capnproto_schemas_csharp.csproj" />
     <ProjectReference Include="..\..\mas-infrastructure\src\csharp\common\common.csproj" />
     <ProjectReference Include="..\FBPLibCore\FBPLibCore.csproj" />

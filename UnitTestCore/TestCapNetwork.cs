@@ -30,7 +30,7 @@ namespace UnitTests
         public async Task RunNetworkTest()
         {
             var network = new TestCapNetwork();
-            await network.GoA();
+            await network.GoAsync();
             Assert.AreEqual("1", "1");
         }
     }

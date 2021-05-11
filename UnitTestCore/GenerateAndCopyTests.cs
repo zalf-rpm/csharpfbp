@@ -44,7 +44,7 @@ namespace UnitTests
         public async Task CanGenerateAndCopyTest()
         {
             var network = new CanGenerateAndCopy();
-            await network.GoA();
+            await network.GoAsync();
             var values = network.StoreValues.Values;
             Assert.AreEqual(100, values.Count);
             Assert.AreEqual("000100abcd", values[0]);

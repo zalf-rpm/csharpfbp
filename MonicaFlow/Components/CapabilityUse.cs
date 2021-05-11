@@ -6,7 +6,7 @@ using FBPLib;
 
 namespace Components
 {
-    [InPort("IN", type=typeof(Mas.Rpc.Climate.ITimeSeries))]
+    [InPort("CAP")]
     [OutPort("OUT")]
     [ComponentDescription("Receive capability and call it sending the result")]
     class CapabilityUse : Component, IDisposable
@@ -31,7 +31,6 @@ namespace Components
                 {
                     var header = timeSeries.Header().Result;
                     var hl = header.Select(h => h.ToString()).ToList();
-                    //Console.WriteLine(hl.Aggregate((a, v) => a + " | " + v));
                     p = Create(hl);
                     _outPort.Send(p);
                     timeSeries.Dispose();
@@ -42,7 +41,7 @@ namespace Components
 
         public override void OpenPorts()
         {
-            _inPort = OpenInput("IN");
+            _inPort = OpenInput("CAP");
             _outPort = OpenOutput("OUT");
         }
 

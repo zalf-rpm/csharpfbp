@@ -565,7 +565,7 @@ namespace FBPLib
 
             _mainthread.Start();
         }
-        public Task GoA()
+        public Task GoAsync()
         {
             Type t = this.GetType();
             Name = t.FullName;

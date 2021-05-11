@@ -40,7 +40,7 @@ namespace UnitTests
         public async Task CanReadTextTest()
         {
             var network = new CanReadText();
-            await network.GoA();
+            await network.GoAsync();
             var values = network.StoreValues.Values.Cast<string>().ToArray();
             Assert.AreEqual(1, values.Length);
             Assert.IsTrue(values[0].StartsWith("Lorem ipsum"));
@@ -49,7 +49,7 @@ namespace UnitTests
         [Test]
         public async Task MergeAndSort()
         {
-            await new TestNetworks.Networks.MergeandSort().GoA();
+            await new TestNetworks.Networks.MergeandSort().GoAsync();
         }
 
     }
