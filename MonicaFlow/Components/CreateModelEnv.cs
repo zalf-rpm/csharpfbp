@@ -42,9 +42,9 @@ namespace Components
             if (p != null)
             {
                 rest = p.Content;
+                Drop(p);
                 if (rest.GetType() == typeof(ST)) restST = rest as ST;
                 if (rest == null) return;
-                Drop(p);
             }
 
             p = _timeSeriesPort.Receive();
@@ -52,8 +52,8 @@ namespace Components
             if (p != null)
             {
                 timeSeries = p.Content as Climate.ITimeSeries;
-                if (timeSeries == null) return;
                 Drop(p);
+                if (timeSeries == null) return;
             }
 
             p = _soilProfilePort.Receive();
@@ -61,8 +61,8 @@ namespace Components
             if (p != null)
             {
                 soilProfile = p.Content as Soil.Profile;
-                if (soilProfile == null) return;
                 Drop(p);
+                if (soilProfile == null) return;
             }
 
             p = _mgmtEventsPort.Receive();
@@ -70,8 +70,8 @@ namespace Components
             if (p != null)
             {
                 mgmtEvents = p.Content as IEnumerable<Mgmt.Event>;
-                if (mgmtEvents == null) return;
                 Drop(p);
+                if (mgmtEvents == null) return;
             }
 
             var restType = rest.GetType();

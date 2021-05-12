@@ -10,7 +10,7 @@ namespace Components
     [InPort("CAP", description = "EnvModel capability")]
     [InPort("ENV", description = "Environment to use for EnvModel run")]
     [OutPort("OUT")]
-    [ComponentDescription("Receive capability and call it sending the result")]
+    [ComponentDescription("Run the model given capability CAP and environment ENV, returning sending the result on OUT")]
     class RunEnvModel : Component, IDisposable
     {
         IInputPort _capPort;
@@ -32,7 +32,9 @@ namespace Components
             p = _envPort.Receive();
             if (p != null)
             {
-                if (_cap != null && p.Content is Model.Env<C.StructuredText> env)
+                var pc = p.Content;
+                Drop(p);
+                if (_cap != null && pc is Model.Env<C.StructuredText> env)
                 {
                     try
                     {
@@ -43,7 +45,6 @@ namespace Components
                     }
                     catch (RpcException e) { Console.WriteLine(e.Message); }
                 }
-                Drop(p);
             }
         }
 
