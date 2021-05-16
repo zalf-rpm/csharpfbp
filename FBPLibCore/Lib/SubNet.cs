@@ -34,7 +34,7 @@ namespace FBPLib
                 _components.Clear();
                 //_tracing = _mother._tracing;                
                 //_traceFileList = _mother._traceFileList;
-                subEndPort = _outputPorts["*SUBEND"];
+                subEndPort = _outputPorts.GetValueOrDefault("*SUBEND", null);
 
                 try
                 {

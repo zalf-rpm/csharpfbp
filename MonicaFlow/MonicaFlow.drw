@@ -3,64 +3,76 @@
 xsi:noNamespaceSchemaLocation="https://github.com/jpaulm/drawfbp/blob/master/lib/drawfbp_file.xsd">
 <net>
 <desc>Click anywhere on selection area</desc>
- <blocks><block> <x> 946 </x> <y> 337 </y> <id> 1 </id> <type>B</type> <width>92</width> <height>64</height> <description>TimeSeries</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+ <blocks><block> <x> 1064 </x> <y> 274 </y> <id> 1 </id> <type>B</type> <width>92</width> <height>64</height> <description>TimeSeries</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 1174 </x> <y> 574 </y> <id> 2 </id> <type>B</type> <width>92</width> <height>64</height> <description>Run Monica</description> <compname>RunEnvModel.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/RunEnvModel.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1292 </x> <y> 511 </y> <id> 2 </id> <type>B</type> <width>92</width> <height>64</height> <description>Run Monica</description> <compname>RunEnvModel.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/RunEnvModel.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 1418 </x> <y> 574 </y> <id> 3 </id> <type>B</type> <width>92</width> <height>64</height> <description>WriteConsole</description> <compname>WriteToConsole.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/FBPVerbsCore/FBPComponents/WriteToConsole.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1536 </x> <y> 511 </y> <id> 3 </id> <type>B</type> <width>92</width> <height>64</height> <description>WriteConsole</description> <compname>WriteToConsole.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/FBPVerbsCore/FBPComponents/WriteToConsole.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 963 </x> <y> 133 </y> <id> 4 </id> <type>I</type> <width>188</width> <height>29</height> <description>capnp://localhost:11002</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1081 </x> <y> 70 </y> <id> 4 </id> <type>I</type> <width>188</width> <height>29</height> <description>capnp://localhost:11002</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 885 </x> <y> 246 </y> <id> 5 </id> <type>I</type> <width>84</width> <height>29</height> <description>TimeSeries</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1003 </x> <y> 183 </y> <id> 5 </id> <type>I</type> <width>84</width> <height>29</height> <description>TimeSeries</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 1162 </x> <y> 333 </y> <id> 10 </id> <type>B</type> <width>92</width> <height>64</height> <description>MONICA</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1280 </x> <y> 270 </y> <id> 10 </id> <type>B</type> <width>92</width> <height>64</height> <description>MONICA</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 1190 </x> <y> 134 </y> <id> 11 </id> <type>I</type> <width>180</width> <height>29</height> <description>capnp://localhost:6666</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1308 </x> <y> 71 </y> <id> 11 </id> <type>I</type> <width>180</width> <height>29</height> <description>capnp://localhost:6666</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 1352 </x> <y> 240 </y> <id> 12 </id> <type>I</type> <width>340</width> <height>29</height> <description>EnvInstance\<StructuredText,StructuredText\></description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1470 </x> <y> 177 </y> <id> 12 </id> <type>I</type> <width>340</width> <height>29</height> <description>EnvInstance\<StructuredText,StructuredText\></description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 946 </x> <y> 574 </y> <id> 14 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create Env</description> <compname>CreateModelEnv.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/CreateModelEnv.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 1064 </x> <y> 511 </y> <id> 14 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create Env</description> <compname>CreateModelEnv.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/CreateModelEnv.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 585 </x> <y> 593 </y> <id> 15 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create JSON
+<block> <x> 703 </x> <y> 530 </y> <id> 15 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create JSON
 Rest Env</description> <compname>CreateMonicaEnv.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/CreateMonicaEnv.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 397 </x> <y> 512 </y> <id> 16 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
-sim.json</description> <compname>ReadJsonObject.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ReadJsonObject.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 243 </x> <y> 444 </y> <id> 16 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
+sim.json</description> <compname>ReadCompleteFile.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ReadCompleteFile.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 397 </x> <y> 620 </y> <id> 17 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
-crop.json</description> <compname>ReadJsonObject.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ReadJsonObject.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 243 </x> <y> 556 </y> <id> 17 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
+crop.json</description> <compname>ReadCompleteFile.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ReadCompleteFile.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 397 </x> <y> 727 </y> <id> 18 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
-site.json</description> <compname>ReadJsonObject.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ReadJsonObject.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 243 </x> <y> 661 </y> <id> 18 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
+site.json</description> <compname>ReadCompleteFile.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ReadCompleteFile.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 45 </x> <y> 503 </y> <id> 19 </id> <type>I</type> <width>444</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\sim-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> -150 </x> <y> 449 </y> <id> 19 </id> <type>I</type> <width>444</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\sim-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 48 </x> <y> 618 </y> <id> 20 </id> <type>I</type> <width>452</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\crop-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> -153 </x> <y> 552 </y> <id> 20 </id> <type>I</type> <width>452</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\crop-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 19 </x> <y> 727 </y> <id> 21 </id> <type>I</type> <width>452</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\site-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> -149 </x> <y> 664 </y> <id> 21 </id> <type>I</type> <width>452</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\site-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 759 </x> <y> 588 </y> <id> 23 </id> <type>B</type> <width>92</width> <height>64</height> <description>Make
+<block> <x> 877 </x> <y> 525 </y> <id> 23 </id> <type>B</type> <width>92</width> <height>64</height> <description>Make
 Structured
 Text</description> <compname>CreateStructuredText.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/CreateStructuredText.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
-<block> <x> 692 </x> <y> 492 </y> <id> 24 </id> <type>I</type> <width>36</width> <height>29</height> <description>JSON</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+<block> <x> 810 </x> <y> 429 </y> <id> 24 </id> <type>I</type> <width>36</width> <height>29</height> <description>JSON</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 469 </x> <y> 444 </y> <id> 25 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create
+sim object</description> <compname>CreateJsonObject.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/CreateJsonObject.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 469 </x> <y> 556 </y> <id> 26 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create
+crop object</description> <compname>CreateJsonObject.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/CreateJsonObject.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 469 </x> <y> 661 </y> <id> 27 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create
+site object</description> <compname>CreateJsonObject.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/CreateJsonObject.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
 </block> 
 </blocks> <connections>
-<connection> <fromx>1220</fromx> <fromy>571</fromy> <tox>1372</tox> <toy>573</toy> <fromid>2</fromid> <toid>3</toid> <id>3</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>968</fromx> <fromy>147</fromy> <tox>973</tox> <toy>305</toy> <fromid>4</fromid> <toid>1</toid> <id>8</id> <endsatline>false</endsatline><downstreamport>SR</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>1137</fromx> <fromy>148</fromy> <tox>1136</tox> <toy>301</toy> <fromid>11</fromid> <toid>10</toid> <id>10</id> <endsatline>false</endsatline><downstreamport>SR</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>1165</fromx> <fromy>365</fromy> <tox>1167</tox> <toy>542</toy> <fromid>10</fromid> <toid>2</toid> <id>12</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CAP</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>992</fromx> <fromy>576</fromy> <tox>1128</tox> <toy>576</toy> <fromid>14</fromid> <toid>2</toid> <id>13</id> <endsatline>false</endsatline><upstreamport>ENV</upstreamport><downstreamport>ENV</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>443</fromx> <fromy>519</fromy> <tox>539</tox> <toy>571</toy> <fromid>16</fromid> <toid>15</toid> <id>16</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>SIM</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>443</fromx> <fromy>624</fromy> <tox>539</tox> <toy>595</toy> <fromid>17</fromid> <toid>15</toid> <id>17</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CROP</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>443</fromx> <fromy>729</fromy> <tox>539</tox> <toy>615</toy> <fromid>18</fromid> <toid>15</toid> <id>18</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>SITE</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>267</fromx> <fromy>503</fromy> <tox>351</tox> <toy>514</toy> <fromid>19</fromid> <toid>16</toid> <id>19</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>274</fromx> <fromy>620</fromy> <tox>351</tox> <toy>620</toy> <fromid>20</fromid> <toid>17</toid> <id>20</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>245</fromx> <fromy>729</fromy> <tox>351</tox> <toy>729</toy> <fromid>21</fromid> <toid>18</toid> <id>21</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>631</fromx> <fromy>594</fromy> <tox>713</tox> <toy>594</toy> <fromid>15</fromid> <toid>23</toid> <id>22</id> <endsatline>false</endsatline><upstreamport>ENV</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>701</fromx> <fromy>506</fromy> <tox>739</tox> <toy>556</toy> <fromid>24</fromid> <toid>23</toid> <id>23</id> <endsatline>false</endsatline><downstreamport>STR</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>805</fromx> <fromy>594</fromy> <tox>900</tox> <toy>585</toy> <fromid>23</fromid> <toid>14</toid> <id>24</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>REST</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>1246</fromx> <fromy>254</fromy> <tox>1187</tox> <toy>301</toy> <fromid>12</fromid> <toid>10</toid> <id>25</id> <endsatline>false</endsatline><downstreamport>CT</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>927</fromx> <fromy>259</fromy> <tox>918</tox> <toy>305</toy> <fromid>5</fromid> <toid>1</toid> <id>26</id> <endsatline>false</endsatline><downstreamport>CT</downstreamport><segno>0</segno></connection> 
-<connection> <fromx>952</fromx> <fromy>369</fromy> <tox>952</tox> <toy>542</toy> <fromid>1</fromid> <toid>14</toid> <id>27</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>TS</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>515</fromx> <fromy>558</fromy> <tox>657</tox> <toy>534</toy> <fromid>26</fromid> <toid>15</toid> <id>32</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CROP</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>515</fromx> <fromy>665</fromy> <tox>657</tox> <toy>554</toy> <fromid>27</fromid> <toid>15</toid> <id>33</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>SITE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1338</fromx> <fromy>508</fromy> <tox>1490</tox> <toy>510</toy> <fromid>2</fromid> <toid>3</toid> <id>3</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1086</fromx> <fromy>84</fromy> <tox>1091</tox> <toy>242</toy> <fromid>4</fromid> <toid>1</toid> <id>8</id> <endsatline>false</endsatline><downstreamport>SR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1255</fromx> <fromy>85</fromy> <tox>1254</tox> <toy>238</toy> <fromid>11</fromid> <toid>10</toid> <id>10</id> <endsatline>false</endsatline><downstreamport>SR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1283</fromx> <fromy>302</fromy> <tox>1285</tox> <toy>479</toy> <fromid>10</fromid> <toid>2</toid> <id>12</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CAP</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1110</fromx> <fromy>513</fromy> <tox>1246</tox> <toy>513</toy> <fromid>14</fromid> <toid>2</toid> <id>13</id> <endsatline>false</endsatline><upstreamport>ENV</upstreamport><downstreamport>ENV</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>72</fromx> <fromy>449</fromy> <tox>197</tox> <toy>446</toy> <fromid>19</fromid> <toid>16</toid> <id>19</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>73</fromx> <fromy>554</fromy> <tox>197</tox> <toy>556</toy> <fromid>20</fromid> <toid>17</toid> <id>20</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>77</fromx> <fromy>666</fromy> <tox>197</tox> <toy>663</toy> <fromid>21</fromid> <toid>18</toid> <id>21</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>749</fromx> <fromy>531</fromy> <tox>831</tox> <toy>531</toy> <fromid>15</fromid> <toid>23</toid> <id>22</id> <endsatline>false</endsatline><upstreamport>ENV</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>819</fromx> <fromy>443</fromy> <tox>857</tox> <toy>493</toy> <fromid>24</fromid> <toid>23</toid> <id>23</id> <endsatline>false</endsatline><downstreamport>STR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>923</fromx> <fromy>531</fromy> <tox>1018</tox> <toy>522</toy> <fromid>23</fromid> <toid>14</toid> <id>24</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>REST</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1364</fromx> <fromy>191</fromy> <tox>1305</tox> <toy>238</toy> <fromid>12</fromid> <toid>10</toid> <id>25</id> <endsatline>false</endsatline><downstreamport>CT</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1045</fromx> <fromy>196</fromy> <tox>1036</tox> <toy>242</toy> <fromid>5</fromid> <toid>1</toid> <id>26</id> <endsatline>false</endsatline><downstreamport>CT</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1070</fromx> <fromy>306</fromy> <tox>1070</tox> <toy>479</toy> <fromid>1</fromid> <toid>14</toid> <id>27</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>TS</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>289</fromx> <fromy>449</fromy> <tox>423</tox> <toy>449</toy> <fromid>16</fromid> <toid>25</toid> <id>28</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>289</fromx> <fromy>558</fromy> <tox>423</tox> <toy>558</toy> <fromid>17</fromid> <toid>26</toid> <id>29</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>289</fromx> <fromy>664</fromy> <tox>423</tox> <toy>664</toy> <fromid>18</fromid> <toid>27</toid> <id>30</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>515</fromx> <fromy>444</fromy> <tox>657</tox> <toy>510</toy> <fromid>25</fromid> <toid>15</toid> <id>31</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>SIM</downstreamport><segno>0</segno></connection> 
 </connections> </net> </drawfbp_file>

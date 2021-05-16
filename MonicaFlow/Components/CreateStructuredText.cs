@@ -25,6 +25,7 @@ namespace Components
             {
                 var str = p.Content.ToString()?.ToUpper();
                 Drop(p);
+                _strPort.Close();
                 if (str != null)
                 {
                     if(str == "XML") _structure = new ST.structure { which = ST.structure.WHICH.Xml };

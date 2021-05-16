@@ -24,8 +24,8 @@ namespace Components
             if (p != null)
             {
                 simj = p.Content as JObject;
-                if (simj == null) return;
                 Drop(p);
+                if (simj == null) return;
             }
 
             p = _cropPort.Receive();
@@ -33,8 +33,8 @@ namespace Components
             if (p != null)
             {
                 cropj = p.Content as JObject;
-                if (cropj == null) return;
                 Drop(p);
+                if (cropj == null) return;
             }
 
             p = _sitePort.Receive();
@@ -42,8 +42,8 @@ namespace Components
             if (p != null)
             {
                 sitej = p.Content as JObject;
-                if (sitej == null) return;
                 Drop(p);
+                if (sitej == null) return;
             }
 
             var envj = _runMonica.CreateMonicaEnv(simj, cropj, sitej, null);
