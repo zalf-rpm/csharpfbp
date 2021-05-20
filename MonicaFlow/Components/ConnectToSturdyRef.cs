@@ -23,18 +23,32 @@ namespace Components
         Type _capType = typeof(Capnp.Rpc.BareProxy);
         OutputPort _outPort;
 
-        private InfraCommon.ConnectionManager ConMan() => (_network as CapabilityNetwork)?.ConMan;
+        private InfraCommon.ConnectionManager ConMan() => (_network as ICapabilityNetwork)?.ConnectionManager();
 
         public override void Execute()
         {
+            if (ConMan() == null)
+            {
+                Console.WriteLine("No ConnectionManager instance available. Closing down process.");
+                _sturdyRefPort.Close();
+                _capTypePort.Close();
+                return;
+            }
+
             // read mandatory sturdy ref to connect to
             Packet p = _sturdyRefPort.Receive();
-            if (p == null) return;
-            else
+            if (p != null)
             {
                 _sturdyRef = p.Content.ToString();
                 Drop(p);
                 _sturdyRefPort.Close();
+
+                if (string.IsNullOrEmpty(_sturdyRef))
+                {
+                    Console.WriteLine("Received sturdy ref is invalid or empty. Closing down process because it is needed.");
+                    _capTypePort.Close();
+                    return;
+                }
             }
             
             // read a string this component will convert to a type
@@ -44,21 +58,31 @@ namespace Components
                 _capType = SupportedTypes.GetValueOrDefault(p.Content.ToString(), _capType);
                 Drop(p);
                 _capTypePort.Close();
+
+                if(_capType == null)
+                {
+                    Console.WriteLine("Received capability type on CT port is unknown. Closing down process because it is needed.");
+                    _sturdyRefPort.Close();
+                    return;
+                }
+
             }
 
-            try
+            // if we got a sturdy ref, try to connect to it
+            if (!string.IsNullOrEmpty(_sturdyRef))
             {
-                if (ConMan() == null || _capType == null) return;
-
-                dynamic task = typeof(InfraCommon.ConnectionManager)
-                    .GetMethod("Connect")
-                    .MakeGenericMethod(_capType)
-                    .Invoke(ConMan(), new object[] { _sturdyRef });
-                var cap = task.Result;
-                p = Create(cap);
-                _outPort.Send(p);
+                try
+                {
+                    dynamic task = typeof(InfraCommon.ConnectionManager)
+                        .GetMethod("Connect")
+                        .MakeGenericMethod(_capType)
+                        .Invoke(ConMan(), new object[] { _sturdyRef });
+                    var cap = task.Result;
+                    p = Create(cap);
+                    _outPort.Send(p);
+                }
+                catch (RpcException e) { Console.WriteLine(e.Message); }
             }
-            catch (RpcException e) { Console.WriteLine(e.Message); }
         }
 
         public override void OpenPorts()
@@ -71,6 +95,7 @@ namespace Components
         public static Dictionary<string, Type> SupportedTypes = new()
         {
             { "TimeSeries", typeof(Climate.ITimeSeries) },
+            { "SoilService", typeof(Soil.IService) },
             { "EnvInstance<StructuredText,StructuredText>", typeof(Model.IEnvInstance<Common.StructuredText, Common.StructuredText>) },
             { "Capability", typeof(Capnp.Rpc.BareProxy) }
         };

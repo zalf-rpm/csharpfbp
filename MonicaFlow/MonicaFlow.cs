@@ -15,16 +15,21 @@ namespace MonicaFlow
             Component("Read__sim.json", typeof(ReadCompleteFile));
             Component("Read__crop.json", typeof(ReadCompleteFile));
             Component("Read__site.json", typeof(ReadCompleteFile));
-            Component("Monica_Patch", typeof(MonicaPatchSubnet));
-            Connect(Component("Read__site.json"), Port("OUT"), Component("Monica_Patch"), Port("SITE"));
-            Connect(Component("Monica_Patch"), Port("SECTIONS"), Component("WriteConsole"), Port("IN"));
+            Component("Monica__Patch", typeof(MonicaPatchSubnet));
+            Component("Split", typeof(SplitString));
+            Connect(Component("Read__site.json"), Port("OUT"), Component("Monica__Patch"), Port("SITE"));
+            Connect(Component("Monica__Patch"), Port("SECTIONS"), Component("WriteConsole"), Port("IN"));
+            Initialize("capnp://localhost:10000", Component("Monica__Patch"), Port("SOILSERVICE_SR"));
+            Initialize("|", Component("Split"), Port("AT"));
+            Initialize("50,10 | 51,11 | 52,12", Component("Split"), Port("IN"));
+            Connect(Component("Split"), Port("OUT"), Component("Monica__Patch"), Port("LATLON"));
             Initialize(Environment.GetEnvironmentVariable("MONICA_HOME") + "\\Examples\\Hohenfinow2\\sim-min.json", Component("Read__sim.json"), Port("IN"));
             Initialize(Environment.GetEnvironmentVariable("MONICA_HOME") + "\\Examples\\Hohenfinow2\\crop-min.json", Component("Read__crop.json"), Port("IN"));
             Initialize(Environment.GetEnvironmentVariable("MONICA_HOME") + "\\Examples\\Hohenfinow2\\site-min.json", Component("Read__site.json"), Port("IN"));
-            Initialize("capnp://localhost:11002", Component("Monica_Patch"), Port("TIMESERIES_SR"));
-            Initialize("capnp://localhost:6666", Component("Monica_Patch"), Port("MONICA_SR"));
-            Connect(Component("Read__sim.json"), Port("OUT"), Component("Monica_Patch"), Port("SIM"));
-            Connect(Component("Read__crop.json"), Port("OUT"), Component("Monica_Patch"), Port("CROP"));
+            Initialize("capnp://localhost:11002", Component("Monica__Patch"), Port("TIMESERIES_SR"));
+            Initialize("capnp://localhost:6666", Component("Monica__Patch"), Port("MONICA_SR"));
+            Connect(Component("Read__sim.json"), Port("OUT"), Component("Monica__Patch"), Port("SIM"));
+            Connect(Component("Read__crop.json"), Port("OUT"), Component("Monica__Patch"), Port("CROP"));
             //*/
 
             /*

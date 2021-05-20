@@ -23,15 +23,15 @@ namespace Components
     [InPort("TS", description = "Mas.Rpc.Climate.ITimeSeries capability")]
     [InPort("SP", description = "Mas.Rpc.Soil.Profile structure")]
     [InPort("MES", description = "Enumerable of Mas.Rpc.Management.Event ")]
-    [OutPort("ENV")]
+    [OutPort("OUT")]
     [ComponentDescription("Receive capability and call it sending the result")]
-    class CreateModelEnv : Component, IDisposable
+    class CreateModelEnv : Component
     {
         IInputPort _restPort;
         IInputPort _timeSeriesPort;
         IInputPort _soilProfilePort;
         IInputPort _mgmtEventsPort;
-        OutputPort _envPort;
+        OutputPort _outPort;
 
         public override void Execute()
         {
@@ -43,8 +43,7 @@ namespace Components
             {
                 rest = p.Content;
                 Drop(p);
-                if (rest.GetType() == typeof(ST)) restST = rest as ST;
-                if (rest == null) return;
+                restST = rest as ST;
             }
 
             p = _timeSeriesPort.Receive();
@@ -53,7 +52,6 @@ namespace Components
             {
                 timeSeries = p.Content as Climate.ITimeSeries;
                 Drop(p);
-                if (timeSeries == null) return;
             }
 
             p = _soilProfilePort.Receive();
@@ -62,7 +60,6 @@ namespace Components
             {
                 soilProfile = p.Content as Soil.Profile;
                 Drop(p);
-                if (soilProfile == null) return;
             }
 
             p = _mgmtEventsPort.Receive();
@@ -71,8 +68,10 @@ namespace Components
             {
                 mgmtEvents = p.Content as IEnumerable<Mgmt.Event>;
                 Drop(p);
-                if (mgmtEvents == null) return;
             }
+
+            // we need the rest in order to create the Env, else we deactivate the component
+            if (rest == null) return;
 
             var restType = rest.GetType();
             var envType = typeof(Model.Env<>).MakeGenericType(restType);
@@ -91,7 +90,7 @@ namespace Components
             if (mgmtEvents != null) env.cropRotation = mgmtEvents;
 
             p = Create(env);
-            _envPort.Send(p);
+            _outPort.Send(p);
         }
 
         public override void OpenPorts()
@@ -100,11 +99,7 @@ namespace Components
             _timeSeriesPort = OpenInput("TS");
             _soilProfilePort = OpenInput("SP");
             _mgmtEventsPort = OpenInput("MES");
-            _envPort = OpenOutput("ENV");
-        }
-
-        public void Dispose()
-        {
+            _outPort = OpenOutput("OUT");
         }
     }
 }

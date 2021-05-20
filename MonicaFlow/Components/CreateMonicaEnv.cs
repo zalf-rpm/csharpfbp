@@ -7,14 +7,14 @@ namespace Components
     [InPort("SIM", description = "sim data", type = typeof(JObject))]
     [InPort("CROP", description = "crop data", type = typeof(JObject))]
     [InPort("SITE", description = "site data", type = typeof(JObject))]
-    [OutPort("ENV")]
+    [OutPort("OUT")]
     [ComponentDescription("take SIM, CROP, SITE inputs and create JSON env for MONICA")]
     class CreateMonicaEnv : Component
     {
         IInputPort _simPort;
         IInputPort _cropPort;
         IInputPort _sitePort;
-        OutputPort _envPort;
+        OutputPort _outPort;
         RunMonica _runMonica = new(new MonicaIO());
 
         public override void Execute()
@@ -48,7 +48,7 @@ namespace Components
 
             var envj = _runMonica.CreateMonicaEnv(simj, cropj, sitej, null);
             p = Create(envj);
-            _envPort.Send(p);
+            _outPort.Send(p);
         }
 
         public override void OpenPorts()
@@ -56,7 +56,7 @@ namespace Components
             _simPort = OpenInput("SIM");
             _cropPort = OpenInput("CROP");
             _sitePort = OpenInput("SITE");
-            _envPort = OpenOutput("ENV");
+            _outPort = OpenOutput("OUT");
         }
     }
 }

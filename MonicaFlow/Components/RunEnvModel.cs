@@ -21,8 +21,7 @@ namespace Components
         public override void Execute()
         {
             Packet p = _capPort.Receive();
-            if (p == null) return;
-            else
+            if (p != null)
             {
                 _cap = p.Content as Model.IEnvInstance<C.StructuredText, C.StructuredText>;
                 Drop(p);

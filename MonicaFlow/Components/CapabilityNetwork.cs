@@ -3,9 +3,14 @@ using FBPLib;
 
 namespace Components
 {
-    public abstract class CapabilityNetwork : Network, IDisposable
+    public abstract class CapabilityNetwork : Network, IDisposable, ICapabilityNetwork
     {
-        public Mas.Infrastructure.Common.ConnectionManager ConMan = new();
+        private Mas.Infrastructure.Common.ConnectionManager _conMan = new();
+
+        public virtual Mas.Infrastructure.Common.ConnectionManager ConnectionManager()
+        {
+            return _conMan;
+        }
 
         // To detect redundant calls
         private bool _disposed = false;
@@ -16,7 +21,7 @@ namespace Components
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed) return;
-            if (disposing) ConMan?.Dispose();
+            if (disposing) _conMan?.Dispose();
             _disposed = true;
         }
     }
