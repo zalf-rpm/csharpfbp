@@ -29,9 +29,9 @@ namespace Components
                 var str = p.Content.ToString();
                 Drop(p);
                 var strs = str.Split(_at).Select(s => s.Trim());
-                if (strs.Count() > 1) _outPort.Send(Create(Packet.Types.Open));
+                if (strs.Count() > 1) _outPort.Send(Create(Packet.Types.Open, ""));
                 foreach(var s in strs) _outPort.Send(Create(s));
-                if (strs.Count() > 1) _outPort.Send(Create(Packet.Types.Close));
+                if (strs.Count() > 1) _outPort.Send(Create(Packet.Types.Close, ""));
             }
         }
 

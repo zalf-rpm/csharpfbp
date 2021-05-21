@@ -64,8 +64,7 @@ namespace Components
 
             while ((p = _latlonPort.Receive()) != null && _cap != null)
             {
-                //if (p.Type != Packet.Types.Normal)
-                if (p.Content.ToString() == "Open" || p.Content.ToString() == "Close")
+                if (p.Type != Packet.Types.Normal)
                 {
                     Drop(p);
                     continue;
@@ -84,9 +83,9 @@ namespace Components
                             new Soil.Query { Mandatory = _manProps, Optional = _optProps, OnlyRawData = false }
                         ).Result;
                         
-                        if (profs.Count() > 1) _outPort.Send(Create(Packet.Types.Open, ""));
+                        if (profs.Count > 1) _outPort.Send(Create(Packet.Types.Open, ""));
                         foreach (var prof in profs) _outPort.Send(Create(prof));
-                        if (profs.Count() > 1) _outPort.Send(Create(Packet.Types.Close, ""));
+                        if (profs.Count > 1) _outPort.Send(Create(Packet.Types.Close, ""));
                     }
                     catch (RpcException e) { Console.WriteLine(e.Message); }
                 }
