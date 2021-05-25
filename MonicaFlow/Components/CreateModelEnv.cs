@@ -28,69 +28,90 @@ namespace Components
     class CreateModelEnv : Component
     {
         IInputPort _restPort;
+        int _restLevel = 0;
         IInputPort _timeSeriesPort;
+        int _timeSeriesLevel = 0;
         IInputPort _soilProfilePort;
+        int _soilProfileLevel = 0;
         IInputPort _mgmtEventsPort;
+        int _mgmtEventsLevel = 0;
         OutputPort _outPort;
 
         public override void Execute()
         {
-            Packet p = _restPort.Receive();
-            //Capnp.AnyPointer rest;
-            object rest = null;
-            ST restST = null;
-            if (p != null)
-            {
-                rest = p.Content;
-                Drop(p);
-                restST = rest as ST;
-            }
-
-            p = _timeSeriesPort.Receive();
             Climate.ITimeSeries timeSeries = null;
-            if (p != null)
-            {
-                timeSeries = p.Content as Climate.ITimeSeries;
-                Drop(p);
-            }
-
-            p = _soilProfilePort.Receive();
             Soil.Profile soilProfile = null;
-            if (p != null)
-            {
-                soilProfile = p.Content as Soil.Profile;
-                Drop(p);
-            }
-
-            p = _mgmtEventsPort.Receive();
             IEnumerable<Mgmt.Event> mgmtEvents = null;
-            if (p != null)
+            dynamic env = null;
+            Packet p;
+            do
             {
-                mgmtEvents = p.Content as IEnumerable<Mgmt.Event>;
-                Drop(p);
+                p = null;
+                if (env == null || _restLevel > 0) p = _restPort.Receive();
+                // we need the rest in order to create the Env, else we deactivate the component
+                if (p == null)
+                {
+                    _timeSeriesPort.Close();
+                    _soilProfilePort.Close();
+                    _mgmtEventsPort.Close();
+                    _outPort.Close();
+                    return;
+                }
+                else 
+                {
+                    if (p.Type == Packet.Types.Open) _restLevel++;
+                    else if (p.Type == Packet.Types.Close) _restLevel--;
+                    else
+                    {
+                        object rest = p.Content;
+                        if (rest != null)
+                        {
+                            var restType = rest.GetType();
+                            var envType = typeof(Model.Env<>).MakeGenericType(restType);
+                            if (env = Activator.CreateInstance(envType) != null)
+                            {
+                                if (rest is ST rst) env.Rest = rst;
+                            }
+                            else return; // we need a valid env for everything else -> deactivate the component
+                        }
+                    }
+                    Drop(p);
+                }
+
+                p = null;
+                if (timeSeries == null || _timeSeriesLevel > 0) p = _timeSeriesPort.Receive();
+                if (p != null)
+                {
+                    if (p.Type == Packet.Types.Open) _timeSeriesLevel++;
+                    else if (p.Type == Packet.Types.Close) _timeSeriesLevel--;
+                    else if (p.Content is Climate.ITimeSeries ts) env.TimeSeries = timeSeries = ts;
+                    Drop(p);
+                }
+
+                p = null;
+                if (soilProfile == null || _soilProfileLevel > 0) p = _soilProfilePort.Receive();
+                if (p != null)
+                {
+                    if (p.Type == Packet.Types.Open) _soilProfileLevel++;
+                    else if (p.Type == Packet.Types.Close) _soilProfileLevel--;
+                    else if (p.Content is Soil.Profile sp) env.SoilProfile = soilProfile = sp;
+                    Drop(p);
+                }
+
+                p = null;
+                if (mgmtEvents == null || _mgmtEventsLevel > 0) p = _mgmtEventsPort.Receive();
+                if (p != null)
+                {
+                    if (p.Type == Packet.Types.Open) _mgmtEventsLevel++;
+                    else if (p.Type == Packet.Types.Close) _mgmtEventsLevel--;
+                    else if (p.Content is IEnumerable<Mgmt.Event> es) env.cropRotation = mgmtEvents = es;
+                    Drop(p);
+                }
+
+                p = Create(env);
+                _outPort.Send(p);
             }
-
-            // we need the rest in order to create the Env, else we deactivate the component
-            if (rest == null) return;
-
-            var restType = rest.GetType();
-            var envType = typeof(Model.Env<>).MakeGenericType(restType);
-            dynamic env = Activator.CreateInstance(envType);
-
-            //var selfType = typeof(Class2);
-            //var methodInfo = selfType.GetMethod("Cast", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-            //var genericArguments = new[] { restType };
-            //var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            //var restC = genericMethodInfo?.Invoke(null, new[] { rest });
-            //Console.WriteLine(restC.GetType());
-
-            if (restST != null) env.Rest = restST; // restC;
-            if (timeSeries != null) env.TimeSeries = timeSeries;
-            if (soilProfile != null) env.SoilProfile = soilProfile;
-            if (mgmtEvents != null) env.cropRotation = mgmtEvents;
-
-            p = Create(env);
-            _outPort.Send(p);
+            while (_restLevel + _timeSeriesLevel + _soilProfileLevel + _mgmtEventsLevel > 0);
         }
 
         public override void OpenPorts()
