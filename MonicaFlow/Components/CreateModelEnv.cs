@@ -72,8 +72,9 @@ namespace Components
                             {
                                 if (rest is ST rst) env.Rest = rst;
                             }
-                            else return; // we need a valid env for everything else -> deactivate the component
+                            else return; // we need a valid env for everything else,
                         }
+
                     }
                     Drop(p);
                 }

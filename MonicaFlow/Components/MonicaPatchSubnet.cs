@@ -17,8 +17,10 @@ namespace Components
         string description = "Subnet running MONICA on a patch of data";
         public override void Define()
         {
+            Component("Multiply_Envs", typeof(SetValueOnJsonTemplate));
             Component("TimeSeries", typeof(ConnectToSturdyRef));
             Component("Run_Monica", typeof(RunEnvModel));
+            Component("Duplicate_LatLon", typeof(Duplicate));
             Component("MONICA", typeof(ConnectToSturdyRef));
             Component("Create_Env", typeof(CreateModelEnv));
             Component("Create_JSON__Rest_Env", typeof(CreateMonicaEnv));
@@ -44,20 +46,11 @@ namespace Components
             Component("SUBIN_7_", typeof(SubIn));
             Initialize("LATLON", Component("SUBIN_7_"), Port("NAME"));
             Component("Get_soil_profile", typeof(GetSoilProfiles));
-            Connect(Component("SUBIN_3_"), Port("OUT"), Component("Create___sim_object"), Port("IN"));
-            Connect(Component("Run_Monica"), Port("OUT"), Component("SUBOUT"), Port("IN"));
-            Connect(Component("SUBIN_6_"), Port("OUT"), Component("Soil_service"), Port("SR"));
-            Initialize("SoilService", Component("Soil_service"), Port("CT"));
-            Connect(Component("Soil_service"), Port("OUT"), Component("Get_soil_profile"), Port("CAP"));
-            Connect(Component("Get_soil_profile"), Port("OUT"), Component("Create_Env"), Port("SP"));
-            Connect(Component("SUBIN_7_"), Port("OUT"), Component("Get_soil_profile"), Port("LATLON"));
-            Initialize("sand, clay, organicCarbon, bulkDensity, soilType", Component("Get_soil_profile"), Port("MAN"));
             Connect(Component("MONICA"), Port("OUT"), Component("Run_Monica"), Port("CAP"));
             Connect(Component("Create_Env"), Port("OUT"), Component("Run_Monica"), Port("ENV"));
             Connect(Component("Create___sim_object"), Port("OUT"), Component("Create_JSON__Rest_Env"), Port("SIM"));
             Connect(Component("Create___crop_object"), Port("OUT"), Component("Create_JSON__Rest_Env"), Port("CROP"));
             Connect(Component("Create__site_object"), Port("OUT"), Component("Create_JSON__Rest_Env"), Port("SITE"));
-            Connect(Component("Create_JSON__Rest_Env"), Port("OUT"), Component("Make__Structured__Text"), Port("IN"));
             Initialize("JSON", Component("Make__Structured__Text"), Port("STR"));
             Connect(Component("Make__Structured__Text"), Port("OUT"), Component("Create_Env"), Port("REST"));
             Initialize("EnvInstance<StructuredText,StructuredText>", Component("MONICA"), Port("CT"));
@@ -67,6 +60,19 @@ namespace Components
             Connect(Component("SUBIN_2_"), Port("OUT"), Component("MONICA"), Port("SR"));
             Connect(Component("SUBIN_5_"), Port("OUT"), Component("Create__site_object"), Port("IN"));
             Connect(Component("SUBIN_4_"), Port("OUT"), Component("Create___crop_object"), Port("IN"));
+            Connect(Component("SUBIN_3_"), Port("OUT"), Component("Create___sim_object"), Port("IN"));
+            Connect(Component("Run_Monica"), Port("OUT"), Component("SUBOUT"), Port("IN"));
+            Connect(Component("SUBIN_6_"), Port("OUT"), Component("Soil_service"), Port("SR"));
+            Initialize("SoilService", Component("Soil_service"), Port("CT"));
+            Connect(Component("Soil_service"), Port("OUT"), Component("Get_soil_profile"), Port("CAP"));
+            Connect(Component("Get_soil_profile"), Port("OUT"), Component("Create_Env"), Port("SP"));
+            Initialize("sand, clay, organicCarbon, bulkDensity, soilType", Component("Get_soil_profile"), Port("MAN"));
+            Connect(Component("Create_JSON__Rest_Env"), Port("OUT"), Component("Multiply_Envs"), Port("JOBJ"));
+            Connect(Component("Multiply_Envs"), Port("OUT"), Component("Make__Structured__Text"), Port("IN"));
+            Connect(Component("SUBIN_7_"), Port("OUT"), Component("Duplicate_LatLon"), Port("IN"));
+            Connect(Component("Duplicate_LatLon"), Port("OUT[0]"), Component("Get_soil_profile"), Port("LATLON"));
+            Connect(Component("Duplicate_LatLon"), Port("OUT[1]"), Component("Multiply_Envs"), Port("IN"));
+            Initialize("customId", Component("Multiply_Envs"), Port("KEY"));
         }
     }
 }

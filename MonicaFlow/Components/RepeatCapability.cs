@@ -9,8 +9,8 @@ namespace Components
     [InPort("IN", description = "Capability to repeat")]
     [InPort("COUNT", description = "How many times to repeat capability CAP")]
     [OutPort("OUT")]
-    [ComponentDescription("Receive capability and call it sending the result")]
-    class RepeatCapability : Component, IDisposable
+    [ComponentDescription("Receive capability and copy it COUNT times to OUT")]
+    class RepeatCapability : Component
     {
         IInputPort _inPort;
         IInputPort _countPort;
@@ -41,10 +41,6 @@ namespace Components
             _inPort = OpenInput("IN");
             _countPort = OpenInput("COUNT");
             _outPort = OpenOutput("OUT");
-        }
-
-        public void Dispose()
-        {
         }
     }
 }
