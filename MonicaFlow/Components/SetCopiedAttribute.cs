@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Capnp.Rpc;
-using FBPLib;
-using C = Mas.Rpc.Common;
-using Model = Mas.Rpc.Model;
-using Soil = Mas.Rpc.Soil;
+﻿using FBPLib;
 
 namespace Components
 {
     [InPort("KEY", description = "Key under which value to attach. Defaults to 'KEY'")]
     [InPort("VAL", description = "Value to attach")]
-    [InPort("MET", description = "Clone method to call on VAL. Is optional. Default is to copy ValueTypes and clone only ICloneable objects.")]
+    [InPort("METH", description = "Clone method to call on VAL. Is optional. Default is to copy ValueTypes and clone only ICloneable objects.")]
     [InPort("IN", description = "Input packet to attach the soil profile to. Multiple profiles will try to deep copy the packet.")]
     [OutPort("OUT")]
     [ComponentDescription("Get the closest soil profiles to the given geo-location LATLON with the mandatory paramaters MAN and optionally OPT.")]
-    class AttachCopy : Component
+    class SetCopiedAttribute : Component
     {
         IInputPort _keyPort;
         string _key = "KEY";
         IInputPort _valPort;
         object _val = null;
-        IInputPort _metPort;
+        IInputPort _methPort;
         string _met = null;
         IInputPort _inPort;
         OutputPort _outPort;
@@ -36,23 +29,21 @@ namespace Components
                 _keyPort.Close();
             }
 
-            p = _valPort.Receive();
-            if (p != null)
+            if ((p = _valPort.Receive()) != null)
             {
                 _val = p.Content;
                 Drop(p);
                 _valPort.Close();
             }
 
-            p = _metPort.Receive();
-            if (p != null)
+            if ((p = _methPort.Receive()) != null)
             {
                 _met = p.Content?.ToString();
                 Drop(p);
-                _metPort.Close();
+                _methPort.Close();
             }
 
-            while ((p = _inPort.Receive()) != null)
+            if((p = _inPort.Receive()) != null)
             {
                 if (p.Type == Packet.Types.Normal)
                 {
@@ -77,7 +68,7 @@ namespace Components
         {
             _keyPort = OpenInput("KEY");
             _valPort = OpenInput("VAL");
-            _metPort = OpenInput("MET");
+            _methPort = OpenInput("METH");
             _inPort = OpenInput("IN");
             _outPort = OpenOutput("OUT");
         }

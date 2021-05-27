@@ -11,8 +11,8 @@ using Common = Mas.Rpc.Common;
 
 namespace Components
 {
-    [InPort("SR", description = "Sturdy reference to some capability")]
-    [InPort("CT", description = "Name of Cap'n Proto interface this component knows returned by sturdy reference SR (default: Capnp.Rpc.BarProxy)")]
+    [InPort("IN", description = "Sturdy reference to some capability")]
+    [InPort("TYPE", description = "Name of Cap'n Proto interface this component knows returned by sturdy reference SR (default: Capnp.Rpc.BarProxy)")]
     [OutPort("OUT")]
     [ComponentDescription("Return a capability")]
     class ConnectToSturdyRef : Component
@@ -87,8 +87,8 @@ namespace Components
 
         public override void OpenPorts()
         {
-            _sturdyRefPort = OpenInput("SR");
-            _capTypePort = OpenInput("CT");
+            _sturdyRefPort = OpenInput("IN");
+            _capTypePort = OpenInput("TYPE");
             _outPort = OpenOutput("OUT");
         }
 

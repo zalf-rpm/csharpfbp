@@ -2,7 +2,7 @@
 using System.Linq;
 using Capnp.Rpc;
 using FBPLib;
-using C = Mas.Rpc.Common;
+using ST = Mas.Rpc.Common.StructuredText;
 using Model = Mas.Rpc.Model;
 
 namespace Components
@@ -14,7 +14,7 @@ namespace Components
     class RunEnvModel : Component, IDisposable
     {
         IInputPort _capPort;
-        Model.IEnvInstance<C.StructuredText, C.StructuredText> _cap;
+        Model.IEnvInstance<ST, ST> _cap;
         IInputPort _envPort;
         OutputPort _outPort;
 
@@ -23,7 +23,7 @@ namespace Components
             Packet p = _capPort.Receive();
             if (p != null)
             {
-                _cap = p.Content as Model.IEnvInstance<C.StructuredText, C.StructuredText>;
+                _cap = p.Content as Model.IEnvInstance<ST, ST>;
                 Drop(p);
                 _capPort.Close();
             }
@@ -33,13 +33,13 @@ namespace Components
             {
                 var pc = p.Content;
                 Drop(p);
-                if (_cap != null && pc is Model.Env<C.StructuredText> env)
+                if (_cap != null && pc is Model.Env<ST> env)
                 {
                     try
                     {
                         var res = _cap.Run(env).Result;
-                        var jstr = res.Value.ToString();
-                        p = Create(jstr);// res);
+                        //var jstr = res.Value.ToString();
+                        p = Create(res);// jstr);
                         _outPort.Send(p);
                     }
                     catch (RpcException e) { Console.WriteLine(e.Message); }

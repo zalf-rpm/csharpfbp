@@ -105,7 +105,7 @@ namespace Components
                 {
                     if (p.Type == Packet.Types.Open) _mgmtEventsLevel++;
                     else if (p.Type == Packet.Types.Close) _mgmtEventsLevel--;
-                    else if (p.Content is IEnumerable<Mgmt.Event> es) env.cropRotation = mgmtEvents = es;
+                    else if (p.Content is IEnumerable<Mgmt.Event> es) env.MgmtEvents = mgmtEvents = es;
                     Drop(p);
                 }
 

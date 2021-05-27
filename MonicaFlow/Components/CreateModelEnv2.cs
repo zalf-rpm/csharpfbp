@@ -11,17 +11,9 @@ using System.Collections.Generic;
 
 namespace Components
 {
-    public class Class3
-    {
-        public static T Cast<T>(object o)
-        {
-            return (T)o;
-        }
-    }
-
     [InPort("IN", description = "Input containing all necessary data as attributes")]
     [OutPort("OUT")]
-    [ComponentDescription("Receive capability and call it sending the result")]
+    [ComponentDescription("Create Model.Env<StructuredText> out of IPs received at IN.")]
     class CreateModelEnv2 : Component
     {
         IInputPort _inPort;
@@ -29,70 +21,27 @@ namespace Components
 
         public override void Execute()
         {
-            Climate.ITimeSeries timeSeries = null;
-            Soil.Profile soilProfile = null;
-            IEnumerable<Mgmt.Event> mgmtEvents = null;
-            dynamic env = null;
-
             Packet p;
             while ((p = _inPort.Receive()) != null)
             {
-             
-                
-                
-                
-                if (p.Type == Packet.Types.Open) _restLevel++;
-                else if (p.Type == Packet.Types.Close) _restLevel--;
-                else
+                if (p.Attributes.ContainsKey("rest") && p.Attributes["rest"] is ST rst)
                 {
-                    object rest = p.Content;
-                    if (rest != null)
-                    {
-                        var restType = rest.GetType();
-                        var envType = typeof(Model.Env<>).MakeGenericType(restType);
-                        if (env = Activator.CreateInstance(envType) != null)
-                        {
-                            if (rest is ST rst) env.Rest = rst;
-                        }
-                        else return; // we need a valid env for everything else,
-                    }
+                    Model.Env<ST> env = new() { Rest = rst };
 
+                    if (p.Attributes.ContainsKey("time-series") && p.Attributes["time-series"] is Climate.ITimeSeries ts)
+                        env.TimeSeries = ts;
+
+                    if (p.Attributes.ContainsKey("soil-profile") && p.Attributes["soil-profile"] is Soil.Profile sp)
+                        env.SoilProfile = sp;
+
+                    if (p.Attributes.ContainsKey("mgmt-events") && p.Attributes["mgmt-events"] is IEnumerable<Mgmt.Event> mes)
+                        env.MgmtEvents = mes.ToList();
+                    
+                    var p2 = Create(env);
+                    _outPort.Send(p2);
                 }
                 Drop(p);
             }
-
-            p = null;
-            if (timeSeries == null || _timeSeriesLevel > 0) p = _timeSeriesPort.Receive();
-            if (p != null)
-            {
-                if (p.Type == Packet.Types.Open) _timeSeriesLevel++;
-                else if (p.Type == Packet.Types.Close) _timeSeriesLevel--;
-                else if (p.Content is Climate.ITimeSeries ts) env.TimeSeries = timeSeries = ts;
-                Drop(p);
-            }
-
-            p = null;
-            if (soilProfile == null || _soilProfileLevel > 0) p = _soilProfilePort.Receive();
-            if (p != null)
-            {
-                if (p.Type == Packet.Types.Open) _soilProfileLevel++;
-                else if (p.Type == Packet.Types.Close) _soilProfileLevel--;
-                else if (p.Content is Soil.Profile sp) env.SoilProfile = soilProfile = sp;
-                Drop(p);
-            }
-
-            p = null;
-            if (mgmtEvents == null || _mgmtEventsLevel > 0) p = _mgmtEventsPort.Receive();
-            if (p != null)
-            {
-                if (p.Type == Packet.Types.Open) _mgmtEventsLevel++;
-                else if (p.Type == Packet.Types.Close) _mgmtEventsLevel--;
-                else if (p.Content is IEnumerable<Mgmt.Event> es) env.cropRotation = mgmtEvents = es;
-                Drop(p);
-            }
-
-            p = Create(env);
-            _outPort.Send(p);
         }
 
         public override void OpenPorts()

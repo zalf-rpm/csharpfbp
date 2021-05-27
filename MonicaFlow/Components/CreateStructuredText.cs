@@ -8,24 +8,24 @@ using ST = Mas.Rpc.Common.StructuredText;
 namespace Components
 {
     [InPort("IN", description = "String representing the structured text")]
-    [InPort("STR", description = "one of [JSON, XML, none] - names are case-insensitive")]
+    [InPort("TYPE", description = "one of [JSON, XML, none] - names are case-insensitive")]
     [OutPort("OUT")]
     [ComponentDescription("Create StructuredText out of content at IN and structure type at STR")]
     class CreateStructuredText : Component
     {
         IInputPort _inPort;
-        IInputPort _strPort;
+        IInputPort _typePort;
         ST.structure _structure = new ST.structure { which = ST.structure.WHICH.None };
         OutputPort _outPort;
 
         public override void Execute()
         {
-            Packet p = _strPort.Receive();
+            Packet p = _typePort.Receive();
             if (p != null)
             {
                 var str = p.Content.ToString()?.ToUpper();
                 Drop(p);
-                _strPort.Close();
+                _typePort.Close();
                 if (str != null)
                 {
                     if(str == "XML") _structure = new ST.structure { which = ST.structure.WHICH.Xml };
@@ -49,7 +49,7 @@ namespace Components
         public override void OpenPorts()
         {
             _inPort = OpenInput("IN");
-            _strPort = OpenInput("STR");
+            _typePort = OpenInput("TYPE");
             _outPort = OpenOutput("OUT");
         }
     }

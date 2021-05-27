@@ -1,0 +1,35 @@
+<?xml version="1.0"?> 
+ <drawfbp_file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="https://github.com/jpaulm/drawfbp/blob/master/lib/drawfbp_file.xsd">
+<net>
+<desc>Replace attr by structured text in IP</desc>
+ <blocks><block> <x> 843 </x> <y> 664 </y> <id> 23 </id> <type>B</type> <width>92</width> <height>64</height> <description>Make
+Structured
+Text</description> <compname>CreateStructuredText.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/CreateStructuredText.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 660 </x> <y> 734 </y> <id> 103 </id> <type>B</type> <width>92</width> <height>64</height> <description>Get rest attr</description> <compname>GetAttribute.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/GetAttribute.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 496 </x> <y> 739 </y> <id> 119 </id> <type>C</type> <width>36</width> <height>28</height> <description>IN</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1053 </x> <y> 744 </y> <id> 105 </id> <type>B</type> <width>92</width> <height>64</height> <description>Set structured
+text rest attr</description> <compname>SetAttribute.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/SetAttribute.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1222 </x> <y> 724 </y> <id> 121 </id> <type>D</type> <width>36</width> <height>28</height> <description>OUT</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 496 </x> <y> 439 </y> <id> 122 </id> <type>C</type> <width>36</width> <height>28</height> <description>KEY</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 815 </x> <y> 447 </y> <id> 123 </id> <type>B</type> <width>92</width> <height>64</height> <description>DUP</description> <compname>Duplicate.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/Duplicate.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 496 </x> <y> 512 </y> <id> 125 </id> <type>C</type> <width>36</width> <height>28</height> <description>TYPE</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+</blocks> <connections>
+<connection> <fromx>706</fromx> <fromy>715</fromy> <tox>797</tox> <toy>664</toy> <fromid>103</fromid> <toid>23</toid> <id>64</id> <endsatline>false</endsatline><upstreamport>VAL</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>706</fromx> <fromy>746</fromy> <tox>1007</tox> <toy>757</toy> <fromid>103</fromid> <toid>105</toid> <id>65</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>514</fromx> <fromy>436</fromy> <tox>769</tox> <toy>439</toy> <fromid>122</fromid> <toid>123</toid> <id>1</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>795</fromx> <fromy>479</fromy> <tox>676</tox> <toy>702</toy> <fromid>123</fromid> <toid>103</toid> <id>2</id> <endsatline>false</endsatline><upstreamport>OUT[0]</upstreamport><downstreamport>KEY</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>853</fromx> <fromy>479</fromy> <tox>1052</tox> <toy>712</toy> <fromid>123</fromid> <toid>105</toid> <id>4</id> <endsatline>false</endsatline><upstreamport>OUT[1]</upstreamport><downstreamport>KEY</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>514</fromx> <fromy>513</fromy> <tox>840</tox> <toy>632</toy> <fromid>125</fromid> <toid>23</toid> <id>5</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>TYPE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>514</fromx> <fromy>739</fromy> <tox>614</tox> <toy>735</toy> <fromid>119</fromid> <toid>103</toid> <id>74</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1099</fromx> <fromy>746</fromy> <tox>1204</tox> <toy>724</toy> <fromid>105</fromid> <toid>121</toid> <id>75</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>889</fromx> <fromy>657</fromy> <tox>1007</tox> <toy>729</toy> <fromid>23</fromid> <toid>105</toid> <id>62</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>VAL</downstreamport><segno>0</segno></connection> 
+</connections> </net> </drawfbp_file>
