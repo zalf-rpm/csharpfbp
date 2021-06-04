@@ -75,7 +75,8 @@ namespace MonicaFlow
         static async Task Main(String[] argv)
         {
             //AppContext.SetSwitch("Tracing", true);
-            using var network = new MonicaFlow();
+            //using var network = new MonicaFlow();
+            using var network = new ZmqTestFlow();
             await network.GoAsync();
             Console.WriteLine("bla");
         }

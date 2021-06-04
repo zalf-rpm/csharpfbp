@@ -517,6 +517,7 @@ namespace Monica
             env.Add("cropRotation", cropj["cropRotation"]);
             env.Add("cropRotations", cropj["cropRotations"]);
             env.Add("events", simj["output"]["events"]);
+            env.Add("outputs", new JObject { { "obj-outputs?", simj["output"].Value<bool>("obj-outputs?") } });
             env.Add("pathToClimateCSV", simj["climate.csv"]);
             env.Add("csvViaHeaderOptions", simj["climate.csv-options"]);
             env["csvViaHeaderOptions"]["latitude"] = sitej["SiteParameters"]["Latitude"];
