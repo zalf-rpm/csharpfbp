@@ -7,6 +7,109 @@ using System.Text;
 
 namespace Monica
 {
+    class OId
+    {
+        public enum OP { AVG, MEDIAN, SUM, MIN, MAX, FIRST, LAST, NONE, _UNDEFINED_OP_ };
+
+        public enum ORGAN { ROOT = 0, LEAF, SHOOT, FRUIT, STRUCT, SUGAR, _UNDEFINED_ORGAN_ };
+
+        //! id and layer aggregation
+        public OId(int id, OP layerAgg)
+        { Id = id; LayerAggOp = layerAgg; FromLayer = 0; ToLayer = 20; }
+
+        //! id, layer aggregation and time aggregation, shortcut for aggregating all layers in non daily setting
+        public OId(int id, OP layerAgg, OP timeAgg)
+        { Id = id;  LayerAggOp = layerAgg; TimeAggOp = timeAgg; FromLayer = 0; ToLayer = 20; }
+
+        //! id, layer aggregation of from to (incl) to layers
+        public OId(int id, int from, int to, OP layerAgg)
+        { Id = id; LayerAggOp = layerAgg; FromLayer = from; ToLayer = to; }
+
+        //! aggregate layers from to (incl) to in a non daily setting
+        public OId(int id, int from, int to, OP layerAgg, OP timeAgg)
+        { Id = id; LayerAggOp = layerAgg; TimeAggOp = timeAgg; FromLayer = from; ToLayer = to; }
+
+        public bool IsRange() { return FromLayer >= 0 && ToLayer >= 0; }// && fromLayer < toLayer; }
+
+        public bool IsOrgan() { return Organ != ORGAN._UNDEFINED_ORGAN_; }
+
+        public string ToString(bool includeTimeAgg = false)
+        {
+            var oss = new StringBuilder();
+            oss.Append("[");
+            oss.Append(Name);
+            if (IsOrgan())
+                oss.Append(", ").Append(ToString(Organ));
+            else if (IsRange())
+                oss.Append(", [").Append(FromLayer + 1).Append(", ").Append(ToLayer + 1).Append(
+                    (LayerAggOp != OP.NONE ? ", " + ToString(LayerAggOp) : "")).Append("]");
+            else if (FromLayer >= 0)
+                oss.Append(", ").Append(FromLayer + 1);
+            if (includeTimeAgg)
+                oss.Append(", ").Append(ToString(TimeAggOp));
+            oss.Append("]");
+            return oss.ToString();
+        }
+
+        public string ToString(OId.OP op) 
+        {
+            string res = "undef";
+            switch (op)
+            {
+                case OP.AVG: res = "AVG"; break;
+                case OP.MEDIAN: res = "MEDIAN"; break;
+                case OP.SUM: res = "SUM"; break;
+                case OP.MIN: res = "MIN"; break;
+                case OP.MAX: res = "MAX"; break;
+                case OP.FIRST: res = "FIRST"; break;
+                case OP.LAST: res = "LAST"; break;
+                case OP.NONE: res = "NONE"; break;
+                case OP._UNDEFINED_OP_: break;
+                default: break;
+            }
+            return res;
+        }
+        public string ToString(OId.ORGAN organ) 
+        {
+            string res = "undef";
+            switch (organ)
+            {
+                case ORGAN.ROOT: res = "Root"; break;
+                case ORGAN.LEAF: res = "Leaf"; break;
+                case ORGAN.SHOOT: res = "Shoot"; break;
+                case ORGAN.FRUIT: res = "Fruit"; break;
+                case ORGAN.STRUCT: res = "Struct"; break;
+                case ORGAN.SUGAR: res = "Sugar"; break;
+                case ORGAN._UNDEFINED_ORGAN_: break;
+                default: break;
+            }
+            return res;
+        }
+
+        public string OutputName()
+        {
+            string outName = Name;
+            if (IsOrgan())
+                outName = outName + "/" + ToString(Organ);
+            if (DisplayName.Length != 0)
+                outName = DisplayName;
+            return outName;
+        }
+
+        public int Id { get; set; } = -1;
+        public string Name { get; set; } = "";
+        public string DisplayName { get; set; } = "";
+        public string Unit { get; set; } = "";
+        public string JsonInput { get; set; } = "";
+        public OP LayerAggOp { get; set; } = OP.NONE; //! aggregate values on potentially daily basis (e.g. soil layers)
+        public OP TimeAggOp { get; set; } = OP.AVG; //! aggregate values in a second time range (e.g. monthly)
+        public ORGAN Organ { get; set; } = ORGAN._UNDEFINED_ORGAN_;
+        public int FromLayer { get; set; } = -1;
+        public int ToLayer { get; set; } = -1;
+    };
+
+
+
     public class MonicaIO
     {
         private int OP_AVG = 0;
