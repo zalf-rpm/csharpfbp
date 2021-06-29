@@ -29,6 +29,25 @@ namespace Monica
         public OId(int id, int from, int to, OP layerAgg, OP timeAgg)
         { Id = id; LayerAggOp = layerAgg; TimeAggOp = timeAgg; FromLayer = from; ToLayer = to; }
 
+        public OId(JObject j)
+        {
+            Id = j["id"]?.Value<int>() ?? Id;
+            set_string_value(name, j, "name");
+            set_string_value(displayName, j, "displayName");
+            set_string_value(unit, j, "unit");
+            set_string_value(jsonInput, j, "jsonInput");
+
+            layerAggOp = OP(int_valueD(j, "layerAggOp", NONE));
+            timeAggOp = OP(int_valueD(j, "timeAggOp", AVG));
+
+            organ = ORGAN(int_valueD(j, "organ", _UNDEFINED_ORGAN_));
+
+            set_int_value(fromLayer, j, "fromLayer");
+            set_int_value(toLayer, j, "toLayer");
+
+            return{ };
+        }
+
         public bool IsRange() { return FromLayer >= 0 && ToLayer >= 0; }// && fromLayer < toLayer; }
 
         public bool IsOrgan() { return Organ != ORGAN._UNDEFINED_ORGAN_; }
