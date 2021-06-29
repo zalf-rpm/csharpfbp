@@ -8,29 +8,59 @@ using ST = Mas.Rpc.Common.StructuredText;
 using System.Collections.Generic;
 using Monica;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Components
 {
     [InPort("IN", description = "Structured text output of MONICA")]
-    [InPort("SPLIT", description = "Split sections into separated text streams. true | false (default)", type = typeof(String))]
+    [InPort("OPTS", description = "Json Object with options like " +
+        "split (true|false=default) -> split sections into separate text streams, " +
+        "csvSep (char default=',') -> the csv separator to use, " +
+        "addSSBrackets (true|false=default) -> will add brackets around the sections if split = true and bracket name will be section name," +
+        "includeSectionName (true=default|false) -> will add the section name before the header line," +
+        "includeHeaderRow (true=default|false) -> include header row to section," +
+        "includeUnitsRow (true=default|false) -> include units row to section," +
+        "includeAggRows (true|false=default) -> include 2 aggregration rows to section", 
+        type = typeof(String))]
     [OutPort("OUT")]
     [ComponentDescription("Create CSV Text out of structured text")]
     class CreateMonicaCSV : Component
     {
         IInputPort _inPort;
-        IInputPort _splitPort;
+        IInputPort _optsPort;
         bool _split = false;
+        bool _addSSBrackets = false;
+        char _csvSep = ',';
+        bool _includeSectionName = true;
+        bool _includeHeaderRow = true;
+        bool _includeUnitsRow = true;
+        bool _includeAggRows = false;
         OutputPort _outPort;
 
         public override void Execute()
         {
-            Packet p = _splitPort.Receive();
+            Packet p = _optsPort.Receive();
             if (p != null)
             {
-                var str = p.Content.ToString()?.ToUpper();
+                var str = p.Content?.ToString();
                 Drop(p);
-                _splitPort.Close();
-                if (str != null) _split = str == "TRUE";
+                _optsPort.Close();
+                if (str != null)
+                {
+                    try
+                    {
+                        var j = JObject.Parse(str);
+                        _split = j["split"]?.Value<bool>() ?? _split;
+                        _addSSBrackets = j["addSSBrackets"]?.Value<bool>() ?? _addSSBrackets;
+                        _includeSectionName = j["includeSectionName"]?.Value<bool>() ?? _includeSectionName;
+                        _includeHeaderRow = j["includeHeaderRow"]?.Value<bool>() ?? _includeHeaderRow;
+                        _includeUnitsRow = j["includeUnitsRow"]?.Value<bool>() ?? _includeUnitsRow;
+                        _includeAggRows = j["includeAggRows"]?.Value<bool>() ?? _includeAggRows;
+                        _csvSep = j["csvSep"]?.ToString().DefaultIfEmpty(_csvSep).First() ?? _csvSep;
+                    }
+                    catch (JsonReaderException) { }
+
+                }
             }
 
             p = _inPort.Receive();
@@ -41,31 +71,45 @@ namespace Components
                     Drop(p);
                     if (st == null) return;
 
-                    if()
+                    if (st.Structure.which == ST.structure.WHICH.Json && !string.IsNullOrEmpty(st.Value))
+                    {
+                        try
+                        {
+                            var outputj = JObject.Parse(st.Value);
 
-                    for (const auto&d : output.data)
-		{
-			out << "\"" << replace(d.origSpec, "\"", "") << "\"" << endl;
-                        writeOutputHeaderRows(out, d.outputIds, csvSep, includeHeaderRow, includeUnitsRow, includeAggRows);
-                        writeOutput(out, d.outputIds, d.results, csvSep);
-			out << endl;
+                            StringBuilder sb = null;
+                            var dataj = outputj["data"];
+                            if (dataj != null)
+                            {
+                                foreach (var sectionj in dataj)
+                                {
+                                    if (_split) sb = new StringBuilder();
+                                    if (sb == null) sb = new StringBuilder();
 
+                                    var sectionName = "\""  + (sectionj["origSpec"]?.ToString() ?? "Unknow section").Replace("\"", "") + "\"";
+                                    if(_includeSectionName) sb.Append(sectionName);
+                                    var outputIds = sectionj.Select(jt => new OId(jt.Value<JObject>())).ToList();
+
+                                    WriteOutputHeaderRows(sb, outputIds, _csvSep, _includeHeaderRow, _includeUnitsRow, _includeAggRows);
+                                    var res = sectionj["results"];
+                                    if (res != null && res.Any()) WriteOutput(sb, outputIds, res.Select(jt => (JArray)jt), _csvSep);
+                                    else { 
+                                        res = sectionj["resultsObj"];
+                                        if (res != null && res.Any()) WriteOutputObj(sb, outputIds, res.Select(jt => (JObject)jt), _csvSep);
+                                    }
+                                    
+                                    sb.Append('\n');
+
+                                    if (_split) _outPort.Send(Create(sb.ToString()));
+                                }
+
+                                if (!_split) _outPort.Send(Create(sb.ToString()));
+                            }
+                        }
+                        catch (JsonReaderException) { }
                     }
-
-
-
-                    p = Create(st);
-                    _outPort.Send(p);
                 }
             }
-        }
-
-        private List<string> CreateCSVStrings()
-        {
-            var res = new List<string>();
-
-
-            return res;
         }
 
         private void WriteOutputHeaderRows(StringBuilder sb,
@@ -258,7 +302,7 @@ namespace Components
         public override void OpenPorts()
         {
             _inPort = OpenInput("IN");
-            _splitPort = OpenInput("SPLIT");
+            _optsPort = OpenInput("OPTS");
             _outPort = OpenOutput("OUT");
         }
     }

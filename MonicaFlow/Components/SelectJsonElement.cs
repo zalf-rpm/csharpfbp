@@ -5,11 +5,14 @@ using ST = Mas.Rpc.Common.StructuredText;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Newtonsoft.Json;
 
 namespace Components
 {
     [InPort("IN", description = "JSON IP")]
-    [InPort("CONF", description = "JSON string configuring the component. Define key | path and split = true | false")]
+    [InPort("OPTS", description = "Options configuring the component, " +
+        "key | path -> select the subelement at given key or path," +
+        "split (true=default | false) -> split selected subelement if it is a collection")]
     [OutPort("OUT")]
     [OutPort("PASS", optional = true)]
     [ComponentDescription("Select a JSON element and output it.")]
@@ -27,12 +30,16 @@ namespace Components
             Packet p = _confPort.Receive();
             if (p != null)
             {
-                var conf = JObject.Parse(p.Content?.ToString() ?? "{}");
+                try
+                {
+                    var conf = JObject.Parse(p.Content?.ToString() ?? "{}");
+                    _split = conf.Value<bool>("split");
+                    _keys = conf.Value<JArray>("path")?.Select(k => k.Value<string>()).ToList() ?? _keys;
+                    var k = conf.Value<string>("key");
+                    if (k != null) _keys = new() { k };
+                }
+                catch (JsonReaderException) { }
                 Drop(p);
-                _split = conf.Value<bool>("split");
-                _keys = conf.Value<JArray>("path")?.Select(k => k.Value<string>()).ToList() ?? _keys;
-                var k = conf.Value<string>("key");
-                if (k != null) _keys = new() { k };
                 _confPort.Close();
             }
 

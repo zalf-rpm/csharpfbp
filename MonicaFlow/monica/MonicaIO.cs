@@ -31,21 +31,21 @@ namespace Monica
 
         public OId(JObject j)
         {
+            if (j == null) return;
+
             Id = j["id"]?.Value<int>() ?? Id;
-            set_string_value(name, j, "name");
-            set_string_value(displayName, j, "displayName");
-            set_string_value(unit, j, "unit");
-            set_string_value(jsonInput, j, "jsonInput");
+            Name = j["name"]?.ToString() ?? Name;
+            DisplayName = j["displayName"]?.ToString() ?? DisplayName;
+            Unit = j["unit"]?.ToString() ?? Unit;
+            JsonInput = j["jsonInput"]?.ToString() ?? JsonInput;
 
-            layerAggOp = OP(int_valueD(j, "layerAggOp", NONE));
-            timeAggOp = OP(int_valueD(j, "timeAggOp", AVG));
+            LayerAggOp = (OP)(j["layerAggOp"]?.Value<int>() ?? (int)OP.NONE);
+            TimeAggOp = (OP)(j["timeAggOp"]?.Value<int>() ?? (int)OP.AVG);
 
-            organ = ORGAN(int_valueD(j, "organ", _UNDEFINED_ORGAN_));
+            Organ = (ORGAN)(j["organ"]?.Value<int>() ?? (int)ORGAN._UNDEFINED_ORGAN_);
 
-            set_int_value(fromLayer, j, "fromLayer");
-            set_int_value(toLayer, j, "toLayer");
-
-            return{ };
+            FromLayer = j["fromLayer"]?.Value<int>() ?? FromLayer;
+            ToLayer = j["toLayer"]?.Value<int>() ?? ToLayer;
         }
 
         public bool IsRange() { return FromLayer >= 0 && ToLayer >= 0; }// && fromLayer < toLayer; }

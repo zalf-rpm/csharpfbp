@@ -1,0 +1,58 @@
+<?xml version="1.0"?> 
+ <drawfbp_file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="https://github.com/jpaulm/drawfbp/blob/master/lib/drawfbp_file.xsd">
+<net>
+<desc>Click anywhere on selection area</desc>
+ <blocks><block> <x> 1160 </x> <y> 496 </y> <id> 32 </id> <type>B</type> <width>92</width> <height>64</height> <description>create csvs</description> <compname>CreateMonicaCSV.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/CreateMonicaCSV.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1238 </x> <y> 373 </y> <id> 33 </id> <type>I</type> <width>244</width> <height>29</height> <description>{"split": true, "csvSep": ";"}</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1430 </x> <y> 469 </y> <id> 3 </id> <type>B</type> <width>92</width> <height>64</height> <description>WriteConsole</description> <compname>WriteToConsole.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/FBPVerbsCore/FBPComponents/WriteToConsole.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 808 </x> <y> 261 </y> <id> 4 </id> <type>I</type> <width>188</width> <height>29</height> <description>capnp://localhost:11002</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1217 </x> <y> 264 </y> <id> 11 </id> <type>I</type> <width>180</width> <height>29</height> <description>capnp://localhost:6666</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 549 </x> <y> 422 </y> <id> 16 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
+sim.json</description> <compname>ReadCompleteFile.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ReadCompleteFile.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 543 </x> <y> 529 </y> <id> 17 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
+crop.json</description> <compname>ReadCompleteFile.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ReadCompleteFile.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 537 </x> <y> 633 </y> <id> 18 </id> <type>B</type> <width>92</width> <height>64</height> <description>Read
+site.json</description> <compname>ReadCompleteFile.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ReadCompleteFile.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 201 </x> <y> 424 </y> <id> 19 </id> <type>I</type> <width>444</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\sim-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 202 </x> <y> 525 </y> <id> 20 </id> <type>I</type> <width>452</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\crop-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 203 </x> <y> 632 </y> <id> 21 </id> <type>I</type> <width>452</width> <height>29</height> <description>C:\Users\micha\MONICA\Examples\Hohenfinow2\site-min.json</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 896 </x> <y> 479 </y> <id> 25 </id> <type>B</type> <width>92</width> <height>64</height> <description>Monica
+Patch</description> <diagramfilename>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/MonicaPatchSubnetV4.drw.cs</diagramfilename> <compname>MonicaPatchSubnet.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/MonicaPatchSubnet.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>true</issubnet> 
+</block> 
+<block> <x> 1017 </x> <y> 263 </y> <id> 26 </id> <type>I</type> <width>188</width> <height>29</height> <description>capnp://localhost:10000</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 549 </x> <y> 281 </y> <id> 27 </id> <type>B</type> <width>92</width> <height>64</height> <description>Split</description> <compname>SplitString.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/SplitString.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 420 </x> <y> 104 </y> <id> 28 </id> <type>I</type> <width>20</width> <height>29</height> <description>|</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 196 </x> <y> 252 </y> <id> 29 </id> <type>I</type> <width>172</width> <height>29</height> <description>50,10 | 51,11 | 52,12</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+</blocks> <connections>
+<connection> <fromx>583</fromx> <fromy>631</fromy> <tox>850</tox> <toy>503</toy> <fromid>18</fromid> <toid>25</toid> <id>32</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>SITE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1017</fromx> <fromy>277</fromy> <tox>896</tox> <toy>447</toy> <fromid>26</fromid> <toid>25</toid> <id>34</id> <endsatline>false</endsatline><downstreamport>SOILSERVICE_SR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>430</fromx> <fromy>118</fromy> <tox>529</tox> <toy>249</toy> <fromid>28</fromid> <toid>27</toid> <id>35</id> <endsatline>false</endsatline><downstreamport>AT</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>282</fromx> <fromy>255</fromy> <tox>503</tox> <toy>288</toy> <fromid>29</fromid> <toid>27</toid> <id>36</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>595</fromx> <fromy>282</fromy> <tox>850</tox> <toy>448</toy> <fromid>27</fromid> <toid>25</toid> <id>37</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>LATLON</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1157</fromx> <fromy>387</fromy> <tox>1157</tox> <toy>464</toy> <fromid>33</fromid> <toid>32</toid> <id>43</id> <endsatline>false</endsatline><downstreamport>OPTS</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>942</fromx> <fromy>485</fromy> <tox>1114</tox> <toy>496</toy> <fromid>25</fromid> <toid>32</toid> <id>44</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1206</fromx> <fromy>492</fromy> <tox>1384</tox> <toy>476</toy> <fromid>32</fromid> <toid>3</toid> <id>45</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>423</fromx> <fromy>424</fromy> <tox>503</tox> <toy>424</toy> <fromid>19</fromid> <toid>16</toid> <id>19</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>428</fromx> <fromy>527</fromy> <tox>497</tox> <toy>529</toy> <fromid>20</fromid> <toid>17</toid> <id>20</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>429</fromx> <fromy>634</fromy> <tox>491</tox> <toy>635</toy> <fromid>21</fromid> <toid>18</toid> <id>21</id> <endsatline>false</endsatline><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>836</fromx> <fromy>275</fromy> <tox>870</tox> <toy>447</toy> <fromid>4</fromid> <toid>25</toid> <id>28</id> <endsatline>false</endsatline><downstreamport>TIMESERIES_SR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1220</fromx> <fromy>278</fromy> <tox>918</tox> <toy>447</toy> <fromid>11</fromid> <toid>25</toid> <id>29</id> <endsatline>false</endsatline><downstreamport>MONICA_SR</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>595</fromx> <fromy>427</fromy> <tox>850</tox> <toy>463</toy> <fromid>16</fromid> <toid>25</toid> <id>30</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>SIM</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>589</fromx> <fromy>526</fromy> <tox>850</tox> <toy>483</toy> <fromid>17</fromid> <toid>25</toid> <id>31</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CROP</downstreamport><segno>0</segno></connection> 
+</connections> </net> </drawfbp_file>

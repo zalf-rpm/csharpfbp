@@ -6,7 +6,7 @@ using ST = Mas.Rpc.Common.StructuredText;
 namespace Components
 {
     [InPort("IN", description = "StructuredText IP")]
-    [InPort("TEXT", description = "if true or yes, output only text. Defaults to false.")]
+    [InPort("TEXT", description = "output only text (true/yes | false/no = default")]
     [OutPort("OUT")]
     [ComponentDescription("Extract text out of StructuredText in IP")]
     class StructuredTextToText : Component
@@ -31,22 +31,26 @@ namespace Components
             {
                 if(p.Content is ST st)
                 {
-                    switch(st.Structure.which)
+                    if (_text) _outPort.Send(Create(st.Value));
+                    else
                     {
-                        case ST.structure.WHICH.Json:
-                            var jt = JToken.Parse(st.Value);
-                            _outPort.Send(Create(jt));
-                            break;
-                        case ST.structure.WHICH.Xml:
-                            var xml = XDocument.Parse(st.Value);
-                            _outPort.Send(Create(xml));
-                            break;
-                        case ST.structure.WHICH.None:
-                            _outPort.Send(Create(st.Value));
-                            break;
-                        default:
-                            _outPort.Send(Create(st.Value));
-                            break;
+                        switch (st.Structure.which)
+                        {
+                            case ST.structure.WHICH.Json:
+                                var jt = JToken.Parse(st.Value);
+                                _outPort.Send(Create(jt));
+                                break;
+                            case ST.structure.WHICH.Xml:
+                                var xml = XDocument.Parse(st.Value);
+                                _outPort.Send(Create(xml));
+                                break;
+                            case ST.structure.WHICH.None:
+                                _outPort.Send(Create(st.Value));
+                                break;
+                            default:
+                                _outPort.Send(Create(st.Value));
+                                break;
+                        }
                     }
                 }
                 Drop(p);
