@@ -16,7 +16,7 @@ namespace Components
     [InPort("OPTS", description = "Json Object with options like " +
         "split (true|false=default) -> split sections into separate text streams, " +
         "csvSep (char default=',') -> the csv separator to use, " +
-        "addSSBrackets (true|false=default) -> will add brackets around the sections if split = true and bracket name will be section name," +
+        "addSSBrackets (true|false=default) -> will add brackets around the sections if split = true," +
         "includeSectionName (true=default|false) -> will add the section name before the header line," +
         "includeHeaderRow (true=default|false) -> include header row to section," +
         "includeUnitsRow (true=default|false) -> include units row to section," +
@@ -81,14 +81,15 @@ namespace Components
                             var dataj = outputj["data"];
                             if (dataj != null)
                             {
+                                if (_addSSBrackets && _split) _outPort.Send(Create(Packet.Types.Open, null));
                                 foreach (var sectionj in dataj)
                                 {
                                     if (_split) sb = new StringBuilder();
                                     if (sb == null) sb = new StringBuilder();
 
                                     var sectionName = "\""  + (sectionj["origSpec"]?.ToString() ?? "Unknow section").Replace("\"", "") + "\"";
-                                    if(_includeSectionName) sb.Append(sectionName);
-                                    var outputIds = sectionj.Select(jt => new OId(jt.Value<JObject>())).ToList();
+                                    if(_includeSectionName) sb.Append(sectionName).Append('\n');
+                                    var outputIds = sectionj["outputIds"].Select(jt => new OId(jt.Value<JObject>())).ToList();
 
                                     WriteOutputHeaderRows(sb, outputIds, _csvSep, _includeHeaderRow, _includeUnitsRow, _includeAggRows);
                                     var res = sectionj["results"];
@@ -102,7 +103,7 @@ namespace Components
 
                                     if (_split) _outPort.Send(Create(sb.ToString()));
                                 }
-
+                                if (_addSSBrackets && _split) _outPort.Send(Create(Packet.Types.Close, null));
                                 if (!_split) _outPort.Send(Create(sb.ToString()));
                             }
                         }
@@ -174,7 +175,7 @@ namespace Components
 
             if (values.Any())
             {
-                for (var k = 0; k < values.First().Count(); k++)
+                for (var k = 0; k < values.First().Count; k++)
                 {
                     var  i = 0;
                     var oidsSize = outputIds.Count();
@@ -186,6 +187,9 @@ namespace Components
                         {
                             case JTokenType.Float:
                                 sb.Append((float)j).Append(csvSep_);
+                                break;
+                            case JTokenType.Integer:
+                                sb.Append((int)j).Append(csvSep_);
                                 break;
                             case JTokenType.String:
                                 sb.Append(j.ToString().IndexOfAny(escapeTokens) == -1 ? j : $"\"{j}\"").Append(csvSep_);
@@ -204,6 +208,9 @@ namespace Components
                                         {
                                             case JTokenType.Float:
                                                 sb.Append((float)jv).Append(csvSep__);
+                                                break;
+                                            case JTokenType.Integer:
+                                                sb.Append((int)jv).Append(csvSep__);
                                                 break;
                                             case JTokenType.String:
                                                 sb.Append(j.ToString().IndexOfAny(escapeTokens) == -1 ? jv : $"\"{jv}\"").Append(csvSep__);
@@ -253,6 +260,9 @@ namespace Components
                                 case JTokenType.Float: 
                                     sb.Append((float)j).Append(csvSep_);
                                     break;
+                                case JTokenType.Integer:
+                                    sb.Append((int)j).Append(csvSep_);
+                                    break;
                                 case JTokenType.String:
                                     sb.Append(j.ToString().IndexOfAny(escapeTokens) == -1 ? j : $"\"{j}\"").Append(csvSep_);
                                     break;
@@ -270,6 +280,9 @@ namespace Components
                                             {
                                                 case JTokenType.Float:
                                                     sb.Append((float)jv).Append(csvSep__);
+                                                    break;
+                                                case JTokenType.Integer:
+                                                    sb.Append((int)jv).Append(csvSep__);
                                                     break;
                                                 case JTokenType.String:
                                                     sb.Append(j.ToString().IndexOfAny(escapeTokens) == -1 ? jv : $"\"{jv}\"").Append(csvSep__);

@@ -13,26 +13,32 @@ namespace MonicaFlow
             //*
             Component("create_csvs", typeof(CreateMonicaCSV));
             Component("WriteConsole", typeof(WriteToConsole));
-            Component("Read_sim.json", typeof(ReadCompleteFile));
-            Component("Read_crop.json", typeof(ReadCompleteFile));
-            Component("Read_site.json", typeof(ReadCompleteFile));
-            Component("Monica_Patch", typeof(MonicaPatchSubnet));
+            Component("Read__sim.json", typeof(ReadCompleteFile));
+            Component("Replace_env_var", typeof(ReplaceEnvVars));
+            Component("Read__crop.json", typeof(ReadCompleteFile));
+            Component("Replace__env_var", typeof(ReplaceEnvVars));
+            Component("Read__site.json", typeof(ReadCompleteFile));
+            Component("Replace_env_var_2_", typeof(ReplaceEnvVars));
+            Component("Monica__Patch", typeof(MonicaPatchSubnet));
             Component("Split", typeof(SplitString));
-            Connect(Component("Read_site.json"), Port("OUT"), Component("Monica_Patch"), Port("SITE"));
-            Initialize("capnp://localhost:10000", Component("Monica_Patch"), Port("SOILSERVICE_SR"));
+            Connect(Component("Read__site.json"), Port("OUT"), Component("Monica__Patch"), Port("SITE"));
+            Initialize("capnp://localhost:10000", Component("Monica__Patch"), Port("SOILSERVICE_SR"));
             Initialize("|", Component("Split"), Port("AT"));
             Initialize("50,10 | 51,11 | 52,12", Component("Split"), Port("IN"));
-            Connect(Component("Split"), Port("OUT"), Component("Monica_Patch"), Port("LATLON"));
+            Connect(Component("Split"), Port("OUT"), Component("Monica__Patch"), Port("LATLON"));
             Initialize("{\"split\": true, \"csvSep\": \";\"}", Component("create_csvs"), Port("OPTS"));
-            Connect(Component("Monica_Patch"), Port("OUT"), Component("create_csvs"), Port("IN"));
+            Connect(Component("Monica__Patch"), Port("OUT"), Component("create_csvs"), Port("IN"));
             Connect(Component("create_csvs"), Port("OUT"), Component("WriteConsole"), Port("IN"));
-            Initialize("C:\\Users\\micha\\MONICA\\Examples\\Hohenfinow2\\sim-min.json", Component("Read_sim.json"), Port("IN"));
-            Initialize("C:\\Users\\micha\\MONICA\\Examples\\Hohenfinow2\\crop-min.json", Component("Read_crop.json"), Port("IN"));
-            Initialize("C:\\Users\\micha\\MONICA\\Examples\\Hohenfinow2\\site-min.json", Component("Read_site.json"), Port("IN"));
-            Initialize("capnp://localhost:11002", Component("Monica_Patch"), Port("TIMESERIES_SR"));
-            Initialize("capnp://localhost:6666", Component("Monica_Patch"), Port("MONICA_SR"));
-            Connect(Component("Read_sim.json"), Port("OUT"), Component("Monica_Patch"), Port("SIM"));
-            Connect(Component("Read_crop.json"), Port("OUT"), Component("Monica_Patch"), Port("CROP"));
+            Initialize("${MONICA_HOME}\\Examples\\Hohenfinow2\\sim-min.json", Component("Replace_env_var"), Port("IN"));
+            Connect(Component("Replace_env_var"), Port("OUT"), Component("Read__sim.json"), Port("IN"));
+            Initialize("${MONICA_HOME}\\Examples\\Hohenfinow2\\crop-min.json", Component("Replace__env_var"), Port("IN"));
+            Connect(Component("Replace__env_var"), Port("OUT"), Component("Read__crop.json"), Port("IN"));
+            Initialize("${MONICA_HOME}\\Examples\\Hohenfinow2\\site-min.json", Component("Replace_env_var_2_"), Port("IN"));
+            Connect(Component("Replace_env_var_2_"), Port("OUT"), Component("Read__site.json"), Port("IN"));
+            Initialize("capnp://localhost:11002", Component("Monica__Patch"), Port("TIMESERIES_SR"));
+            Initialize("capnp://localhost:6666", Component("Monica__Patch"), Port("MONICA_SR"));
+            Connect(Component("Read__sim.json"), Port("OUT"), Component("Monica__Patch"), Port("SIM"));
+            Connect(Component("Read__crop.json"), Port("OUT"), Component("Monica__Patch"), Port("CROP"));
             //*/
 
 
