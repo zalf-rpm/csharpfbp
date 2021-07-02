@@ -42,15 +42,15 @@ namespace Components
                 _sturdyRef = p.Content.ToString();
                 Drop(p);
                 _sturdyRefPort.Close();
-
-                if (string.IsNullOrEmpty(_sturdyRef))
-                {
-                    Console.WriteLine("Received sturdy ref is invalid or empty. Closing down process because it is needed.");
-                    _capTypePort.Close();
-                    return;
-                }
             }
-            
+
+            if (string.IsNullOrEmpty(_sturdyRef))
+            {
+                Console.WriteLine("Received sturdy ref is invalid or empty. Closing down process because it is needed.");
+                _capTypePort.Close();
+                return;
+            }
+
             // read a string this component will convert to a type
             p = _capTypePort.Receive();
             if (p != null)
@@ -61,28 +61,20 @@ namespace Components
 
                 if(_capType == null)
                 {
-                    Console.WriteLine("Received capability type on CT port is unknown. Closing down process because it is needed.");
-                    _sturdyRefPort.Close();
+                    Console.WriteLine("Received capability type on TYPE port is unknown. Closing down process because it is needed.");
                     return;
                 }
-
             }
 
-            // if we got a sturdy ref, try to connect to it
-            if (!string.IsNullOrEmpty(_sturdyRef))
+            try
             {
-                try
-                {
-                    dynamic task = typeof(InfraCommon.ConnectionManager)
-                        .GetMethod("Connect")
-                        .MakeGenericMethod(_capType)
-                        .Invoke(ConMan(), new object[] { _sturdyRef });
-                    var cap = task.Result;
-                    p = Create(cap);
-                    _outPort.Send(p);
-                }
-                catch (RpcException e) { Console.WriteLine(e.Message); }
+                dynamic task = typeof(InfraCommon.ConnectionManager)
+                    .GetMethod("Connect")
+                    .MakeGenericMethod(_capType)
+                    .Invoke(ConMan(), new object[] { _sturdyRef });
+                _outPort.Send(Create(task.Result));
             }
+            catch (RpcException e) { Console.WriteLine(e.Message); }
         }
 
         public override void OpenPorts()

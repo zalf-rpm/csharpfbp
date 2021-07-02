@@ -1,0 +1,82 @@
+<?xml version="1.0"?> 
+ <drawfbp_file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="https://github.com/jpaulm/drawfbp/blob/master/lib/drawfbp_file.xsd">
+<net>
+<desc>Click anywhere on selection area</desc>
+ <blocks><block> <x> 1334 </x> <y> 548 </y> <id> 1 </id> <type>B</type> <width>92</width> <height>64</height> <description>TimeSeries</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1955 </x> <y> 681 </y> <id> 2 </id> <type>B</type> <width>92</width> <height>64</height> <description>Run Monica</description> <compname>RunEnvModel.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/RunEnvModel.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1241 </x> <y> 431 </y> <id> 5 </id> <type>I</type> <width>84</width> <height>29</height> <description>TimeSeries</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 524 </x> <y> 575 </y> <id> 71 </id> <type>B</type> <width>92</width> <height>64</height> <description>Attach soil
+profile</description> <compname>AttachSoilProfiles.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/AttachSoilProfiles.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 779 </x> <y> 723 </y> <id> 72 </id> <type>B</type> <width>92</width> <height>64</height> <description>Attach Rest
+Env Copies</description> <compname>SetCopiedAttribute.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/SetCopiedAttribute.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1955 </x> <y> 481 </y> <id> 10 </id> <type>B</type> <width>92</width> <height>64</height> <description>MONICA</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/berg.ZALF-AD/GitHub/csharpfbp_fork/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 2020 </x> <y> 365 </y> <id> 12 </id> <type>I</type> <width>340</width> <height>29</height> <description>EnvInstance\<StructuredText,StructuredText\></description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1752 </x> <y> 685 </y> <id> 14 </id> <type>B</type> <width>92</width> <height>64</height> <description>Create Env</description> <compname>CreateModelEnv2.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/CreateModelEnv2.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1079 </x> <y> 522 </y> <id> 26 </id> <type>C</type> <width>36</width> <height>28</height> <description>TIMESERIES_SR</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1703 </x> <y> 463 </y> <id> 27 </id> <type>C</type> <width>36</width> <height>28</height> <description>MONICA_SR</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 755 </x> <y> 566 </y> <id> 94 </id> <type>I</type> <width>36</width> <height>29</height> <description>rest</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 2193 </x> <y> 687 </y> <id> 32 </id> <type>D</type> <width>36</width> <height>28</height> <description>OUT</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 841 </x> <y> 567 </y> <id> 97 </id> <type>I</type> <width>76</width> <height>29</height> <description>DeepClone</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1514 </x> <y> 723 </y> <id> 107 </id> <type>B</type> <width>92</width> <height>64</height> <description>Set timeseries
+cap attr</description> <compname>SetCapAttribute.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/SetCapAttribute.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1512 </x> <y> 598 </y> <id> 108 </id> <type>I</type> <width>92</width> <height>29</height> <description>time-series</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 472 </x> <y> 265 </y> <id> 51 </id> <type>B</type> <width>92</width> <height>64</height> <description>Soil service</description> <compname>ConnectToSturdyRef.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ConnectToSturdyRef.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 302 </x> <y> 271 </y> <id> 52 </id> <type>C</type> <width>36</width> <height>28</height> <description>SOILSERVICE_SR</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 461 </x> <y> 169 </y> <id> 53 </id> <type>I</type> <width>92</width> <height>29</height> <description>SoilService</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1082 </x> <y> 724 </y> <id> 117 </id> <type>B</type> <width>92</width> <height>64</height> <description>Replace by 
+structured text</description> <diagramfilename>C:\Users\micha\GitHub\csharpfbp\MonicaFlow\ReplaceByStructuredTextSubnet.drw</diagramfilename> <compname>ReplaceByStructuredTextSubnet.cs</compname> <blockclassname>C:/Users/micha/GitHub/csharpfbp/MonicaFlow/Components/ReplaceByStructuredTextSubnet.cs</blockclassname> <multiplex>false</multiplex><invisible>false</invisible><issubnet>true</issubnet> 
+</block> 
+<block> <x> 291 </x> <y> 575 </y> <id> 54 </id> <type>C</type> <width>36</width> <height>28</height> <description>LATLON</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1038 </x> <y> 632 </y> <id> 118 </id> <type>I</type> <width>36</width> <height>29</height> <description>rest</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 1110 </x> <y> 635 </y> <id> 119 </id> <type>I</type> <width>36</width> <height>29</height> <description>JSON</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 511 </x> <y> 734 </y> <id> 122 </id> <type>C</type> <width>36</width> <height>28</height> <description>ENV</description> <substreamsensitive>false</substreamsensitive><multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+<block> <x> 225 </x> <y> 383 </y> <id> 59 </id> <type>I</type> <width>388</width> <height>29</height> <description>sand, clay, organicCarbon, bulkDensity, soilType</description> <multiplex>false</multiplex><invisible>false</invisible><issubnet>false</issubnet> 
+</block> 
+</blocks> <connections>
+<connection> <fromx>747</fromx> <fromy>580</fromy> <tox>757</tox> <toy>691</toy> <fromid>94</fromid> <toid>72</toid> <id>96</id> <endsatline>false</endsatline><downstreamport>KEY</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>828</fromx> <fromy>581</fromy> <tox>809</tox> <toy>691</toy> <fromid>97</fromid> <toid>72</toid> <id>97</id> <endsatline>false</endsatline><downstreamport>METH</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1128</fromx> <fromy>709</fromy> <tox>1468</tox> <toy>731</toy> <fromid>117</fromid> <toid>107</toid> <id>69</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1380</fromx> <fromy>550</fromy> <tox>1468</tox> <toy>707</toy> <fromid>1</fromid> <toid>107</toid> <id>70</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CAP</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>309</fromx> <fromy>573</fromy> <tox>478</tox> <toy>573</toy> <fromid>54</fromid> <toid>71</toid> <id>102</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1506</fromx> <fromy>612</fromy> <tox>1506</tox> <toy>691</toy> <fromid>108</fromid> <toid>107</toid> <id>71</id> <endsatline>false</endsatline><downstreamport>KEY</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>320</fromx> <fromy>268</fromy> <tox>426</tox> <toy>268</toy> <fromid>52</fromid> <toid>51</toid> <id>103</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1560</fromx> <fromy>723</fromy> <tox>1706</tox> <toy>691</toy> <fromid>107</fromid> <toid>14</toid> <id>73</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>500</fromx> <fromy>297</fromy> <tox>546</tox> <toy>543</toy> <fromid>51</fromid> <toid>71</toid> <id>107</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CAP</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1958</fromx> <fromy>513</fromy> <tox>1948</tox> <toy>649</toy> <fromid>10</fromid> <toid>2</toid> <id>12</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>CAP</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1050</fromx> <fromy>646</fromy> <tox>1060</tox> <toy>692</toy> <fromid>118</fromid> <toid>117</toid> <id>76</id> <endsatline>false</endsatline><downstreamport>KEY</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>419</fromx> <fromy>398</fromy> <tox>490</tox> <toy>543</toy> <fromid>59</fromid> <toid>71</toid> <id>108</id> <endsatline>false</endsatline><downstreamport>MAN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1798</fromx> <fromy>687</fromy> <tox>1909</tox> <toy>683</toy> <fromid>14</fromid> <toid>2</toid> <id>13</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>ENV</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1117</fromx> <fromy>649</fromy> <tox>1100</tox> <toy>692</toy> <fromid>119</fromid> <toid>117</toid> <id>77</id> <endsatline>false</endsatline><downstreamport>TYPE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>475</fromx> <fromy>183</fromy> <tox>475</tox> <toy>233</toy> <fromid>53</fromid> <toid>51</toid> <id>109</id> <endsatline>false</endsatline><downstreamport>TYPE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>825</fromx> <fromy>723</fromy> <tox>1036</tox> <toy>735</toy> <fromid>72</fromid> <toid>117</toid> <id>78</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>2001</fromx> <fromy>682</fromy> <tox>2175</tox> <toy>682</toy> <fromid>2</fromid> <toid>32</toid> <id>111</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>529</fromx> <fromy>735</fromy> <tox>733</tox> <toy>724</toy> <fromid>122</fromid> <toid>72</toid> <id>112</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>VAL</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1914</fromx> <fromy>379</fromy> <tox>1980</tox> <toy>449</toy> <fromid>12</fromid> <toid>10</toid> <id>25</id> <endsatline>false</endsatline><downstreamport>TYPE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>570</fromx> <fromy>578</fromy> <tox>733</tox> <toy>703</toy> <fromid>71</fromid> <toid>72</toid> <id>89</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1283</fromx> <fromy>444</fromy> <tox>1306</tox> <toy>516</toy> <fromid>5</fromid> <toid>1</toid> <id>26</id> <endsatline>false</endsatline><downstreamport>TYPE</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1097</fromx> <fromy>523</fromy> <tox>1288</tox> <toy>551</toy> <fromid>26</fromid> <toid>1</toid> <id>28</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+<connection> <fromx>1721</fromx> <fromy>463</fromy> <tox>1909</tox> <toy>484</toy> <fromid>27</fromid> <toid>10</toid> <id>29</id> <endsatline>false</endsatline><upstreamport>OUT</upstreamport><downstreamport>IN</downstreamport><segno>0</segno></connection> 
+</connections> </net> </drawfbp_file>

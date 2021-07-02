@@ -7,7 +7,8 @@ namespace Components
     [InPort("METH", description = "Clone method to call on VAL. Is optional. Default is to copy ValueTypes and clone only ICloneable objects.")]
     [InPort("IN", description = "Input packet to attach the soil profile to. Multiple profiles will try to deep copy the packet.")]
     [OutPort("OUT")]
-    [ComponentDescription("Get the closest soil profiles to the given geo-location LATLON with the mandatory paramaters MAN and optionally OPT.")]
+    [ComponentDescription("Set attribute KEY to a copy of VAL, either by implicit value type copy, cloning or " +
+        "calling reflectively method METH value VAL.")]
     class SetCopiedAttribute : Component
     {
         IInputPort _keyPort;

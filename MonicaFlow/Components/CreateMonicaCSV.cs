@@ -14,13 +14,13 @@ namespace Components
 {
     [InPort("IN", description = "Structured text output of MONICA")]
     [InPort("OPTS", description = "Json Object with options like " +
-        "split (true|false=default) -> split sections into separate text streams, " +
+        "split (true | false=default) -> split sections into separate text streams, " +
         "csvSep (char default=',') -> the csv separator to use, " +
-        "addSSBrackets (true|false=default) -> will add brackets around the sections if split = true," +
-        "includeSectionName (true=default|false) -> will add the section name before the header line," +
-        "includeHeaderRow (true=default|false) -> include header row to section," +
-        "includeUnitsRow (true=default|false) -> include units row to section," +
-        "includeAggRows (true|false=default) -> include 2 aggregration rows to section", 
+        "addSSBrackets (true | false=default) -> will add brackets around the sections if split = true," +
+        "includeSectionName (true=default | false) -> will add the section name before the header line," +
+        "includeHeaderRow (true=default | false) -> include header row to section," +
+        "includeUnitsRow (true=default | false) -> include units row to section," +
+        "includeAggRows (true | false=default) -> include 2 aggregration rows to section", 
         type = typeof(String))]
     [OutPort("OUT")]
     [ComponentDescription("Create CSV Text out of structured text")]

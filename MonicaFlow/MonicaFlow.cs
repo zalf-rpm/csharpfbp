@@ -103,14 +103,5 @@ namespace MonicaFlow
             Connect(Component("Create_sim_object"), Port("OUT"), Component("Create_JSON__Rest_Env"), Port("SIM"));
             //*/
         }
-
-        static async Task Main(String[] argv)
-        {
-            //AppContext.SetSwitch("Tracing", true);
-            using var network = new MonicaFlow();
-            //using var network = new ZmqTestFlow();
-            await network.GoAsync();
-            Console.WriteLine("bla");
-        }
     }
 }

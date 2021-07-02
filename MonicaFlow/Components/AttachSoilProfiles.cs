@@ -64,9 +64,11 @@ namespace Components
 
             while ((p = _inPort.Receive()) != null)
             {
-                if (_cap != null && p.Content is ValueTuple<double, double> vt)
+                if (_cap != null && p.Content is string vt) //ValueTuple<double, double> vt)
                 {
-                    var (lat, lon) = vt;
+                    var ll = vt.Split(',').Select(v => double.Parse(v)).ToArray();
+                    double lat = ll[0], lon = ll[1];
+                    Console.WriteLine("lat: " + lat + " lon: " + lon);
                     try
                     {
                         var profs = _cap.ProfilesAt(
