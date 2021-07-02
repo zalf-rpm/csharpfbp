@@ -44,7 +44,7 @@ namespace MonicaFlow
             Initialize("monica_json_env", Component("add_env"), Port("KEY"));
             Initialize("{\"split-at\": \"|\"}", Component("Split"), Port("CONF"));
             Connect(Component("add_env"), Port("OUT"), Component("DUP"), Port("IN"));
-            Initialize("50,10 | 51,11 | 52,12", Component("Split"), Port("IN"));
+            Initialize("55.0329, 8.3443 | 55.0339, 8.4251 | 54.9866, 8.3462 | 54.9402, 8.348 | 54.8927, 8.2693 | 54.8938, 8.3498 | 54.8948, 8.4302 | 54.8958, 8.5107 | 54.8967, 8.5912 | 54.8975, 8.6717 | 54.8983, 8.7522 | 54.8991, 8.8327 | 54.8998, 8.9131", Component("Split"), Port("IN"));
             Initialize("DeepClone", Component("DUP"), Port("METH"));
             Connect(Component("DUP"), Port("OUT[2]"), Component("Monica_2"), Port("CONF"));
             Connect(Component("Load_Balance"), Port("OUT[2]"), Component("Monica_2"), Port("LATLON"));
