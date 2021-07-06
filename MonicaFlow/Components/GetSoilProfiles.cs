@@ -15,7 +15,7 @@ namespace Components
     [InPort("LATLON", description = "Geo-location of profile")]
     [OutPort("OUT")]
     [ComponentDescription("Get the closest soil profiles to the given geo-location LATLON with the mandatory paramaters MAN and optionally OPT.")]
-    class GetSoilProfiles : Component, IDisposable
+    class GetSoilProfiles : Component
     {
         IInputPort _capPort;
         Soil.IService _cap;
@@ -101,7 +101,7 @@ namespace Components
             _outPort = OpenOutput("OUT");
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             _cap?.Dispose();
         }

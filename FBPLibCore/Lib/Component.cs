@@ -15,7 +15,7 @@ namespace FBPLib
     /// </summary>
 
 
-    public abstract class Component
+    public abstract class Component : IDisposable
     {
         /* *
          * Copyright 2007,..., 2011, J. Paul Morrison.  At your option, you may copy,
@@ -1156,7 +1156,10 @@ namespace FBPLib
             _status = newStatus;
             if (_thread != null)
                 _thread.Interrupt();
+            Dispose();
         }
+
+        public virtual void Dispose() {}
     }
 }
 

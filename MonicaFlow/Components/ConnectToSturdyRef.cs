@@ -23,10 +23,13 @@ namespace Components
         Type _capType = typeof(Capnp.Rpc.BareProxy);
         OutputPort _outPort;
 
-        private InfraCommon.ConnectionManager ConMan() => (_network as ICapabilityNetwork)?.ConnectionManager();
+        private InfraCommon.ConnectionManager _conMan = new();
+
+        //private InfraCommon.ConnectionManager ConMan() => (_network as ICapabilityNetwork)?.ConnectionManager();
 
         public override void Execute()
         {
+            /*
             if (ConMan() == null)
             {
                 Console.WriteLine("No ConnectionManager instance available. Closing down process.");
@@ -34,6 +37,7 @@ namespace Components
                 _capTypePort.Close();
                 return;
             }
+            //*/
 
             // read mandatory sturdy ref to connect to
             Packet p = _sturdyRefPort.Receive();
@@ -71,7 +75,8 @@ namespace Components
                 dynamic task = typeof(InfraCommon.ConnectionManager)
                     .GetMethod("Connect")
                     .MakeGenericMethod(_capType)
-                    .Invoke(ConMan(), new object[] { _sturdyRef });
+                    .Invoke(_conMan, new object[] { _sturdyRef });
+                    //.Invoke(ConMan(), new object[] { _sturdyRef });
                 _outPort.Send(Create(task.Result));
             }
             catch (RpcException e) { Console.WriteLine(e.Message); }
@@ -91,5 +96,10 @@ namespace Components
             { "EnvInstance<StructuredText,StructuredText>", typeof(Model.IEnvInstance<Common.StructuredText, Common.StructuredText>) },
             { "Capability", typeof(Capnp.Rpc.BareProxy) }
         };
+        
+        public override void Dispose()
+        {
+            _conMan?.Dispose();
+        }
     }
 }

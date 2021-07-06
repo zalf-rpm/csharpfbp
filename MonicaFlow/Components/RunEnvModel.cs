@@ -11,7 +11,7 @@ namespace Components
     [InPort("ENV", description = "Environment to use for EnvModel run")]
     [OutPort("OUT")]
     [ComponentDescription("Run the model given capability CAP and environment ENV, returning sending the result on OUT")]
-    class RunEnvModel : Component, IDisposable
+    class RunEnvModel : Component
     {
         IInputPort _capPort;
         Model.IEnvInstance<ST, ST> _cap;
@@ -54,7 +54,7 @@ namespace Components
             _outPort = OpenOutput("OUT");
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             _cap?.Dispose();
         }

@@ -9,7 +9,7 @@ namespace Components
     [InPort("CAP")]
     [OutPort("OUT")]
     [ComponentDescription("Receive capability and call it sending the result")]
-    class CapabilityUse : Component, IDisposable
+    class CapabilityUse : Component
     {
         IInputPort _inPort;
         OutputPort _outPort;
@@ -45,7 +45,7 @@ namespace Components
             _outPort = OpenOutput("OUT");
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
         }
     }

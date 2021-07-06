@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Capnp.Rpc;
 using FBPLib;
@@ -15,7 +16,7 @@ namespace Components
     [InPort("IN", description = "Input packet to attach the soil profile to. Multiple profiles will try to deep copy the packet.")]
     [OutPort("OUT")]
     [ComponentDescription("Get the closest soil profiles to the given geo-location LATLON with the mandatory paramaters MAN and optionally OPT.")]
-    class AttachSoilProfiles : Component, IDisposable
+    class AttachSoilProfiles : Component
     {
         IInputPort _capPort;
         Soil.IService _cap;
@@ -66,7 +67,7 @@ namespace Components
             {
                 if (_cap != null && p.Content is string vt) //ValueTuple<double, double> vt)
                 {
-                    var ll = vt.Split(',').Select(v => double.Parse(v)).ToArray();
+                    var ll = vt.Split(',').Select(v => double.Parse(v, CultureInfo.CreateSpecificCulture("en-US"))).ToArray();
                     double lat = ll[0], lon = ll[1];
                     Console.WriteLine("lat: " + lat + " lon: " + lon);
                     try
@@ -100,6 +101,8 @@ namespace Components
                     _outPort.Send(p);
                 }
             }
+
+            //_cap?.Dispose();
         }
 
         public override void OpenPorts()
@@ -111,7 +114,7 @@ namespace Components
             _outPort = OpenOutput("OUT");
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             _cap?.Dispose();
         }
