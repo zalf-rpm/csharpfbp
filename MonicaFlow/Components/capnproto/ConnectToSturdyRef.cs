@@ -20,7 +20,8 @@ namespace Components
         IInputPort _sturdyRefPort;
         string _sturdyRef;
         IInputPort _capTypePort;
-        Type _capType = typeof(Capnp.Rpc.BareProxy);
+        //Type _capType = typeof(Capnp.Rpc.BareProxy);
+        Type _capType = typeof(Proxy);
         OutputPort _outPort;
 
         private InfraCommon.ConnectionManager _conMan = new();
@@ -91,6 +92,8 @@ namespace Components
 
         public static Dictionary<string, Type> SupportedTypes = new()
         {
+            { "ClimateService", typeof(Climate.IService) },
+            { "ClimateDataset", typeof(Climate.IDataset) },
             { "TimeSeries", typeof(Climate.ITimeSeries) },
             { "SoilService", typeof(Soil.IService) },
             { "EnvInstance<StructuredText,StructuredText>", typeof(Model.IEnvInstance<Common.StructuredText, Common.StructuredText>) },

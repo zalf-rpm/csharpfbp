@@ -53,33 +53,11 @@ namespace FBPLib
             object[] attributes = info.GetCustomAttributes(true);
             foreach (object at in attributes)
             {
-                if (at is MustRun)
-                {
-                    MustRun mr = at as MustRun;
-                    MustRun = mr.value;
-                }
-                if (at is SelfStarting)
-                {
-                    SelfStarting sst = at as SelfStarting;
-                    SelfStarting = sst.value;
-                }
-                if (at is OutPort)
-                {
-                    OutPort op = at as OutPort;
-                    ProcOpt(op);
-
-                }
-                if (at is InPort)
-                {
-                    InPort ip = at as InPort;
-                    ProcIpt(ip);
-                }
-                if (at is PriorityAttribute)
-                {
-                    PriorityAttribute p = at as PriorityAttribute;
-                    Priority = p.value;
-                }
-
+                if (at is MustRun mr) MustRun = mr.value;
+                else if (at is SelfStarting sst) SelfStarting = sst.value;
+                else if (at is OutPort op) ProcOpt(op);
+                else if (at is InPort ip) ProcIpt(ip);
+                else if (at is PriorityAttribute p) Priority = p.value;
             }
         }
 
@@ -605,12 +583,12 @@ namespace FBPLib
 
             if (!_inputPorts.ContainsKey(name))
                 FlowError.Complain("Port not specifed in metadata: " + this + "." + name);
-            Object o = _inputPorts[name];
+            var o = _inputPorts[name];
 
             if (o is ConnArray)
                 FlowError.Complain("Port is defined as input array in metadata: " + this._name + "." + name);
 
-            return (IInputPort)o;
+            return o;
         }
         /// <summary> Verbs call this method from their <code>openPorts</code> method to
         /// open an array of inputPorts.  The size of the Array is determined
@@ -637,13 +615,12 @@ namespace FBPLib
             if (name.StartsWith("*"))
                 FlowError.Complain("Attempt to open * port: " + this + "." + name);
 
-            ConnArray ca = null;
             if (!_inputPorts.ContainsKey(name))
                 FlowError.Complain("Port not defined as input array in metadata: " + this._name + "." + name);
-            Object o = _inputPorts[name];
+            var o = _inputPorts[name];
             if (!(o is ConnArray))
                 FlowError.Complain("Port not defined as input array in metadata: " + this._name + "." + name);
-            ca = (ConnArray)o;
+            var ca = o as ConnArray;
             if (!(ca._fixedSize ^ arraySize == 0))
             {
                 FlowError.Complain("Array port fixedSize option in metadata doesn't match specified size: " + this._name
@@ -658,20 +635,15 @@ namespace FBPLib
             }
 
             if (arraySize > 0 && array.Length < arraySize)
-            {
                 Array.Resize(ref array, arraySize);
-            }
 
             for (int i = 0; i < array.Length; i++)
+            {
                 if (array[i] == null)
-                {
-                    NullConnection nc = new NullConnection();
-                    nc.Name = Name + "." + name + "[" + i + "]";
-                    array[i] = nc;
-                }
+                    array[i] = new NullConnection { Name = Name + "." + name + "[" + i + "]" };
+            }
             _inputPorts.Remove(name);
             return array;
-
         }
 
 
@@ -691,11 +663,11 @@ namespace FBPLib
 
             if (!_outputPorts.ContainsKey(name))
                 FlowError.Complain("Port not specified in metadata: " + this + "." + name);
-            Object o = _outputPorts[name];
+            var o = _outputPorts[name];
 
             if (o is OutArray)
                 FlowError.Complain("Port is defined as output array in metadata: " + this._name + "." + name);
-            return (OutputPort)o;
+            return o;
         }
 
 
@@ -720,13 +692,12 @@ namespace FBPLib
             if (name.StartsWith("*"))
                 FlowError.Complain("Attempt to open * port: " + this + "." + name);
 
-            OutArray oa = null;
             if (!_outputPorts.ContainsKey(name))
                 FlowError.Complain("Port not defined as output array in metadata: " + this._name + "." + name);
-            Object o = _outputPorts[name];
+            var o = _outputPorts[name];
             if (!(o is OutArray))
                 FlowError.Complain("Port not defined as output array in metadata: " + this._name + "." + name);
-            oa = (OutArray)o;
+            var oa = o as OutArray;
 
             if (!(oa._fixedSize ^ arraySize == 0))
             {
@@ -742,7 +713,6 @@ namespace FBPLib
 
             if (array != null)
             {
-
                 if (arraySize > 0 && array.Length > arraySize)
                 {
                     FlowError.Complain("Number of elements specified for array port less than actual number used: "
@@ -750,21 +720,14 @@ namespace FBPLib
                 }
 
                 if (arraySize > 0 && array.Length < arraySize)
-                {
                     Array.Resize(ref array, arraySize);
-                }
 
                 for (int i = 0; i < array.Length; i++)
                     if (array[i] == null)
                     {
                         if (!oa._optional && arraySize > 0)
-                        {
                             FlowError.Complain("Mandatory output array port has missing elements: " + this._name + "." + name);
-                        }
-                        array[i] = new NullOutputPort();
-                        array[i]._sender = this;
-                        array[i].Name = Name + "." + name + "[" + i + "]";
-
+                        array[i] = new NullOutputPort { _sender = this, Name = Name + "." + name + "[" + i + "]" };
                     }
             }
             _outputPorts.Remove(name);
@@ -774,7 +737,7 @@ namespace FBPLib
         // Get array of ports in the form name[]
         T[] GetPortArray<T>(Dictionary<string, T> ports, string name)
         {
-            T[] ret = null;
+            T[] ret = new T[0];
             Regex re = new Regex(@"^(\w+)(\[(\d+)\])?$");
 
             foreach (KeyValuePair<string, T> kvp in ports)
@@ -786,6 +749,7 @@ namespace FBPLib
                     continue;
                 string s = m.Groups[1].Value;
                 if (!s.Equals(name)) continue;
+
                 int subs = 0;
                 if (m.Groups[2].Value.Equals(""))
                     continue;
@@ -793,9 +757,6 @@ namespace FBPLib
 
                 if (subs < 0 || subs >= 1000)
                     FlowError.Complain("bad subscript " + name);
-
-                if (ret == null)
-                    ret = new T[0];
                 if (subs >= ret.Length)
                     Array.Resize(ref ret, subs + 1);
                 ret[subs] = kvp.Value;
@@ -855,9 +816,9 @@ namespace FBPLib
                         allDrained = true;
                         hasData = false;
                         foreach (IInputPort inp in inports.Values)
-                            if (inp is Connection)
+                        {
+                            if (inp is Connection c)
                             {
-                                Connection c = inp as Connection;
                                 // lock (c)
                                 // {
                                 //allDrained &= c.IsDrained();
@@ -866,6 +827,7 @@ namespace FBPLib
                                 hasData |= c._buffer._usedSlots > 0;
                                 // }
                             }
+                        }
                         if (allDrained || hasData)
                             break;
                         comp._status = States.Dormant;
@@ -903,16 +865,14 @@ namespace FBPLib
 	        }
          */
             foreach (KeyValuePair<String, OutputPort> kvp in _outputPorts)  {
-                if (kvp.Value is NullOutputPort) {
-                   NullOutputPort nop = (NullOutputPort) kvp.Value;
-                   if (nop._optional) {
-                              continue;
-                   }
+                if (kvp.Value is NullOutputPort nop) 
+                {
+                    if (nop._optional) continue;
 
-                 Console.WriteLine("Output port specified in metadata, but not connected: " +  Name + "."  + 
+                    Console.WriteLine("Output port specified in metadata, but not connected: " +  Name + "."  +
                      kvp.Value.Name);
-                 res = false;
-               }
+                    res = false;
+                }
             }
             return res;
         }
@@ -951,24 +911,18 @@ namespace FBPLib
                     }
                     return;
                 }
+                bool componentExecutedAtLeastOnce = false;
                 _status = States.Active;
 
                 _mother.Trace("{0}: Started", Name);
 
-                if (!_inputPorts.ContainsKey("*IN"))
-                    _autoInput = null;
-                else
-                    _autoInput = (IInputPort)(_inputPorts["*IN"]);
-                if (!_outputPorts.ContainsKey("*OUT"))
-                    _autoOutput = null;
-                else
-                    _autoOutput = (OutputPort)(_outputPorts["*OUT"]);
+                _ = _inputPorts.TryGetValue("*IN", out _autoInput);
+                _ = _outputPorts.TryGetValue("*OUT", out _autoOutput);
 
                 if (_autoInput != null)
                 {
                     Packet p = _autoInput.Receive();
-                    if (p != null)
-                        Drop(p);
+                    if (p != null) Drop(p);
                     _autoInput.Close();
                 }
 
@@ -1003,20 +957,16 @@ namespace FBPLib
                         break;
                     }
                     _packetCount = 0;
-
-                   
+                                       
                     foreach (IInputPort port in _inputPorts.Values)
                     {
-                        if (port is InitializationConnection)
-                        {
-                            InitializationConnection icx = port as InitializationConnection;
-                            icx.Reopen();
-                        }
+                        if (port is InitializationConnection icx) icx.Reopen();
                     }
 
                     _mother.Trace("{0}: Activated", Name);
                     try
                     {
+                        componentExecutedAtLeastOnce = true;
                         Execute(); // do one activation!
                     }
                     catch (ComponentException e)
@@ -1041,9 +991,8 @@ namespace FBPLib
                     }
                     foreach (IInputPort port in _inputPorts.Values)
                     {
-                        if (port is InitializationConnection)
+                        if (port is InitializationConnection icx)
                         {
-                            InitializationConnection icx = port as InitializationConnection;
                             if (!icx.IsClosed())
                                 FlowError.Complain("Component deactivated with IIP port not closed: " + icx.Name);
                         }
@@ -1102,9 +1051,8 @@ namespace FBPLib
 
                 foreach (IInputPort port in _inputPorts.Values)
                 {
-                    if (port is Connection)
+                    if (port is Connection cx)
                     {
-                        Connection cx = port as Connection;
                         if (cx.Count() > 0)
                             Console.Out.WriteLine("{0}: Component terminated with {1} packets in input connection", cx.Name, cx.Count());
                         while (cx.Count() > 0)
@@ -1112,13 +1060,10 @@ namespace FBPLib
                             Packet p = cx._buffer.Take();
                             Console.Out.WriteLine(p);
                         }
-
-
                     }
-                    if (port is InitializationConnection)
+                    else if (port is InitializationConnection iip)
                     {
-                        InitializationConnection iip = port as InitializationConnection;
-                        if (!(iip.IsClosed()))
+                        if (componentExecutedAtLeastOnce && !iip.IsClosed())
                             FlowError.Complain("Component terminated with input port not closed: " + iip.Name);
                     }
                 }

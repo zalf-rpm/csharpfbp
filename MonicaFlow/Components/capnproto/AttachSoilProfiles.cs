@@ -4,8 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Capnp.Rpc;
 using FBPLib;
-using C = Mas.Rpc.Common;
-using Model = Mas.Rpc.Model;
+using Mas.Rpc.Geo;
 using Soil = Mas.Rpc.Soil;
 
 namespace Components
@@ -65,15 +64,12 @@ namespace Components
 
             while ((p = _inPort.Receive()) != null)
             {
-                if (_cap != null && p.Content is string vt) //ValueTuple<double, double> vt)
+                if (_cap != null && p.Content is LatLonCoord llc) 
                 {
-                    var ll = vt.Split(',').Select(v => double.Parse(v, CultureInfo.CreateSpecificCulture("en-US"))).ToArray();
-                    double lat = ll[0], lon = ll[1];
-                    Console.WriteLine("lat: " + lat + " lon: " + lon);
                     try
                     {
                         var profs = _cap.ProfilesAt(
-                            new Mas.Rpc.Geo.LatLonCoord { Lat = lat, Lon = lon },
+                            llc,
                             new Soil.Query { Mandatory = _manProps, Optional = _optProps, OnlyRawData = false }
                         ).Result;
 
@@ -81,7 +77,7 @@ namespace Components
                         {
                             foreach (var prof in profs.SkipLast(1))
                             {
-                                Packet np = Create(vt);
+                                Packet np = Create(llc);
                                 foreach (var (key, val) in p.Attributes)
                                 {
                                     if (val is System.ValueType vt2) np.Attributes[key] = vt2;

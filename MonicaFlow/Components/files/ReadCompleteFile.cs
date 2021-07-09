@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FBPLib;
 
 namespace Components
@@ -26,7 +27,10 @@ namespace Components
                         p = Create(content);
                         _outPort.Send(p);
                     }
-                    catch (System.Exception) { }
+                    catch (System.Exception e) 
+                    {
+                        Console.WriteLine("Exception reading file at path: " + filepath + " Exception: " + e.Message);
+                    }
                 }
             }
         }

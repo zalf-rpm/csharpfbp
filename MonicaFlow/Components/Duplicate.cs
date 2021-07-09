@@ -1,5 +1,7 @@
 ﻿using FBPLib;
+using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Components
 {
@@ -16,31 +18,39 @@ namespace Components
 
         public override void Execute()
         {
-            int no = _outPortArray.Length;
-
-            Packet p;
-            if ((p = _methPort.Receive()) != null)
+            Packet p = _methPort.Receive();
+            if (p != null)
             {
                 _met = p.Content?.ToString();
                 Drop(p);
-                _methPort.Close();
             }
-
-            while ((p = _inPort.Receive()) != null)
+            
+            p = _inPort.Receive();
+            if (p != null)
             {
-                var o = p.Content;
+                var obj = p.Content;
                 Drop(p);
-                if (!string.IsNullOrEmpty(_met))
+                if (obj != null)
                 {
-                    var t = o.GetType();
-                    var m = t.GetMethod(_met);
-                    var clone = m.Invoke(o, null);
-                    if (clone != null) for (int i = 0; i < no; i++) _outPortArray[i].Send(Create(clone));
-                }
-                else
-                {
-                    if (o is System.ValueType vt) for (int i = 0; i < no; i++) _outPortArray[i].Send(Create(vt));
-                    else if (o is System.ICloneable c) for (int i = 0; i < no; i++) _outPortArray[i].Send(Create(c.Clone()));
+                    int no = _outPortArray.Length;
+                    if (!string.IsNullOrEmpty(_met))
+                    {
+                        var t = obj.GetType();
+                        var m = t.GetMethod(_met);
+                        var clone = m.Invoke(obj, null);
+                        if (clone != null) 
+                            for (int i = 0; i < no; i++) 
+                                _outPortArray[i].Send(Create(clone));
+                    }
+                    else
+                    {
+                        if (obj is System.ValueType vt) 
+                            for (int i = 0; i < no; i++) 
+                                _outPortArray[i].Send(Create(vt));
+                        else if (obj is System.ICloneable c) 
+                            for (int i = 0; i < no; i++) 
+                                _outPortArray[i].Send(Create(c.Clone()));
+                    }
                 }
             }
         }
