@@ -63,7 +63,7 @@ namespace Components
             p = _objPort.Receive();
             if (p != null)
             {
-                if (p.Content is JObject jobj) _obj = jobj;
+                _obj = p.Content as JObject;
                 Drop(p);
             }
 

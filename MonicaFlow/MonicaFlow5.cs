@@ -24,7 +24,7 @@ namespace MonicaFlow
             Component("Read__site.json", typeof(ReadCompleteFile));
             Component("Monica_0", typeof(MonicaPatchSubnetV5));
             Component("Split", typeof(SplitString));
-            Component("create_csvs", typeof(CreateMonicaCSV));
+            Component("create_csvs", typeof(MonicaCreateCSV));
             Component("Replace__env_var", typeof(ReplaceEnvVars));
             Component("Replace___env_var", typeof(ReplaceEnvVars));
             Component("Replace__env_var_2_", typeof(ReplaceEnvVars));

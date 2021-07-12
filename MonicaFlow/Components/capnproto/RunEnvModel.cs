@@ -38,11 +38,12 @@ namespace Components
                     try
                     {
                         var res = _cap.Run(env).Result;
-                        //var jstr = res.Value.ToString();
-                        p = Create(res);// jstr);
-                        _outPort.Send(p);
+                        _outPort.Send(Create(res));
                     }
-                    catch (RpcException e) { Console.WriteLine(e.Message); }
+                    catch (RpcException e) 
+                    { 
+                        Console.WriteLine(e.Message); 
+                    }
                 }
             }
         }

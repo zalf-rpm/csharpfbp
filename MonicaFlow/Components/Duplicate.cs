@@ -37,10 +37,11 @@ namespace Components
                     {
                         var t = obj.GetType();
                         var m = t.GetMethod(_met);
-                        var clone = m.Invoke(obj, null);
-                        if (clone != null) 
-                            for (int i = 0; i < no; i++) 
-                                _outPortArray[i].Send(Create(clone));
+                        for (int i = 0; i < no; i++)
+                        {
+                            var clone = m.Invoke(obj, null);
+                            if (clone != null) _outPortArray[i].Send(Create(clone));
+                        }
                     }
                     else
                     {

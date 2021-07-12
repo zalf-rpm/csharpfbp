@@ -1,126 +1,88 @@
 ﻿using System;
-using System.Linq;
 using Climate = Mas.Rpc.Climate;
 using Soil = Mas.Rpc.Soil;
 using Mgmt = Mas.Rpc.Management;
 using Model = Mas.Rpc.Model;
 using ST = Mas.Rpc.Common.StructuredText;
-using Capnp.Rpc;
 using FBPLib;
 using System.Collections.Generic;
 
 namespace Components
 {
-    public class Class2
-    {
-        public static T Cast<T>(object o)
-        {
-            return (T)o;
-        }
-    }
-
     [InPort("REST", description = "RestInput")]
-    [InPort("TS", description = "Mas.Rpc.Climate.ITimeSeries capability")]
-    [InPort("SP", description = "Mas.Rpc.Soil.Profile structure")]
-    [InPort("MES", description = "Enumerable of Mas.Rpc.Management.Event ")]
+    [InPort("CLIM", description = "Mas.Rpc.Climate.ITimeSeries capability")]
+    [InPort("SOIL", description = "Mas.Rpc.Soil.Profile structure")]
+    [InPort("MGMT", description = "Enumerable of Mas.Rpc.Management.Event ")]
     [OutPort("OUT")]
-    [ComponentDescription("Receive capability and call it sending the result")]
+    [ComponentDescription("For each received REST and potential CLIMate timeseries, SOILprofile and MGMTevents create an env for OUT")]
     class CreateModelEnv : Component
     {
         IInputPort _restPort;
-        int _restLevel = 0;
         IInputPort _timeSeriesPort;
-        int _timeSeriesLevel = 0;
         IInputPort _soilProfilePort;
-        int _soilProfileLevel = 0;
         IInputPort _mgmtEventsPort;
-        int _mgmtEventsLevel = 0;
         OutputPort _outPort;
 
         public override void Execute()
         {
             Climate.ITimeSeries timeSeries = null;
-            Soil.Profile soilProfile = null;
-            IEnumerable<Mgmt.Event> mgmtEvents = null;
-            dynamic env = null;
-            Packet p;
-            do
+            bool disposeTS = true;
+            Packet p = _timeSeriesPort.Receive();
+            if (p != null)
             {
-                p = null;
-                if (env == null || _restLevel > 0) p = _restPort.Receive();
-                // we need the rest in order to create the Env, else we deactivate the component
-                if (p == null)
-                {
-                    _timeSeriesPort.Close();
-                    _soilProfilePort.Close();
-                    _mgmtEventsPort.Close();
-                    _outPort.Close();
-                    return;
-                }
-                else 
-                {
-                    if (p.Type == Packet.Types.Open) _restLevel++;
-                    else if (p.Type == Packet.Types.Close) _restLevel--;
-                    else
-                    {
-                        object rest = p.Content;
-                        if (rest != null)
-                        {
-                            var restType = rest.GetType();
-                            var envType = typeof(Model.Env<>).MakeGenericType(restType);
-                            if (env = Activator.CreateInstance(envType) != null)
-                            {
-                                if (rest is ST rst) env.Rest = rst;
-                            }
-                            else return; // we need a valid env for everything else,
-                        }
-
-                    }
-                    Drop(p);
-                }
-
-                p = null;
-                if (timeSeries == null || _timeSeriesLevel > 0) p = _timeSeriesPort.Receive();
-                if (p != null)
-                {
-                    if (p.Type == Packet.Types.Open) _timeSeriesLevel++;
-                    else if (p.Type == Packet.Types.Close) _timeSeriesLevel--;
-                    else if (p.Content is Climate.ITimeSeries ts) env.TimeSeries = timeSeries = ts;
-                    Drop(p);
-                }
-
-                p = null;
-                if (soilProfile == null || _soilProfileLevel > 0) p = _soilProfilePort.Receive();
-                if (p != null)
-                {
-                    if (p.Type == Packet.Types.Open) _soilProfileLevel++;
-                    else if (p.Type == Packet.Types.Close) _soilProfileLevel--;
-                    else if (p.Content is Soil.Profile sp) env.SoilProfile = soilProfile = sp;
-                    Drop(p);
-                }
-
-                p = null;
-                if (mgmtEvents == null || _mgmtEventsLevel > 0) p = _mgmtEventsPort.Receive();
-                if (p != null)
-                {
-                    if (p.Type == Packet.Types.Open) _mgmtEventsLevel++;
-                    else if (p.Type == Packet.Types.Close) _mgmtEventsLevel--;
-                    else if (p.Content is IEnumerable<Mgmt.Event> es) env.MgmtEvents = mgmtEvents = es;
-                    Drop(p);
-                }
-
-                p = Create(env);
-                _outPort.Send(p);
+                timeSeries = p.Content as Climate.ITimeSeries;
+                Drop(p);
             }
-            while (_restLevel + _timeSeriesLevel + _soilProfileLevel + _mgmtEventsLevel > 0);
+
+            IEnumerable<Mgmt.Event> mgmtEvents = null;
+            p = _mgmtEventsPort.Receive();
+            if (p != null)
+            {
+                mgmtEvents = p.Content as IEnumerable<Mgmt.Event>;
+                Drop(p);
+            }
+
+            Soil.Profile soilProfile = null;
+            p = _soilProfilePort.Receive();
+            if (p != null)
+            {
+                soilProfile = p.Content as Soil.Profile;
+                Drop(p);
+            }
+            
+            p = _restPort.Receive();
+            if (p != null)
+            {
+                object rest = p.Content;
+                Drop(p);
+                if (rest != null)
+                {
+                    var restType = rest.GetType();
+                    var envType = typeof(Model.Env<>).MakeGenericType(restType);
+                    dynamic env = Activator.CreateInstance(envType);
+                    if (env != null)
+                    {
+                        disposeTS = false;
+                        if (rest is ST rst) env.Rest = rst;
+                        env.TimeSeries = timeSeries;
+                        env.SoilProfile = soilProfile;
+                        env.MgmtEvents = mgmtEvents;
+
+                        _outPort.Send(Create(env));
+                    }
+                }
+            }
+
+            // if there was no REST or no env could be created dispose potential timeSeries cap
+            if (disposeTS) timeSeries?.Dispose();
         }
 
         public override void OpenPorts()
         {
             _restPort = OpenInput("REST");
-            _timeSeriesPort = OpenInput("TS");
-            _soilProfilePort = OpenInput("SP");
-            _mgmtEventsPort = OpenInput("MES");
+            _timeSeriesPort = OpenInput("CLIM");
+            _soilProfilePort = OpenInput("SOIL");
+            _mgmtEventsPort = OpenInput("MGMT");
             _outPort = OpenOutput("OUT");
         }
     }

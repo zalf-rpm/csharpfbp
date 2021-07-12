@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Capnp.Rpc;
 using FBPLib;
+using Mas.Rpc.Geo;
 using C = Mas.Rpc.Common;
 using Model = Mas.Rpc.Model;
 using Soil = Mas.Rpc.Soil;
@@ -62,32 +63,26 @@ namespace Components
                 _optPort.Close();
             }
 
-            while ((p = _latlonPort.Receive()) != null && _cap != null)
+            while ((p = _latlonPort.Receive()) != null)
             {
-                if (p.Type != Packet.Types.Normal)
+                if (_cap != null && p.Content is LatLonCoord llc)
                 {
                     Drop(p);
-                    continue;
-                }
-                var latlon = p.Content.ToString()?.Split(",");
-                Drop(p);
-                if (latlon.Length > 1)
-                {
-                    var lat = double.Parse(latlon[0]);
-                    var lon = double.Parse(latlon[1]);
-
                     try
                     {
                         var profs = _cap.ProfilesAt(
-                            new Mas.Rpc.Geo.LatLonCoord { Lat = lat, Lon = lon },
+                            llc,
                             new Soil.Query { Mandatory = _manProps, Optional = _optProps, OnlyRawData = false }
                         ).Result;
-                        
+
                         if (profs.Count > 1) _outPort.Send(Create(Packet.Types.Open, ""));
                         foreach (var prof in profs) _outPort.Send(Create(prof));
                         if (profs.Count > 1) _outPort.Send(Create(Packet.Types.Close, ""));
                     }
-                    catch (RpcException e) { Console.WriteLine(e.Message); }
+                    catch (RpcException e) 
+                    { 
+                        Console.WriteLine("Exception: " + e.Message); 
+                    }
                 }
             }
         }

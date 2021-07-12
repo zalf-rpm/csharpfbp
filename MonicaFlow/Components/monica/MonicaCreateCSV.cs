@@ -24,7 +24,7 @@ namespace Components
         type = typeof(String))]
     [OutPort("OUT")]
     [ComponentDescription("Create CSV Text out of structured text")]
-    class CreateMonicaCSV : Component
+    class MonicaCreateCSV : Component
     {
         IInputPort _inPort;
         IInputPort _optsPort;
@@ -79,6 +79,7 @@ namespace Components
 
                             StringBuilder sb = null;
                             var dataj = outputj["data"];
+                            var customId = outputj["customId"];
                             if (dataj != null)
                             {
                                 if (_addSSBrackets && _split) _outPort.Send(Create(Packet.Types.Open, null));
@@ -101,13 +102,26 @@ namespace Components
                                     
                                     sb.Append('\n');
 
-                                    if (_split) _outPort.Send(Create(sb.ToString()));
+                                    if (_split)
+                                    {
+                                        var outp = Create(sb.ToString());
+                                        if (customId != null) outp.Attributes.Add("customId", customId);
+                                        _outPort.Send(outp);
+                                    }
                                 }
                                 if (_addSSBrackets && _split) _outPort.Send(Create(Packet.Types.Close, null));
-                                if (!_split) _outPort.Send(Create(sb.ToString()));
+                                if (!_split)
+                                {
+                                    var outp = Create(sb.ToString());
+                                    if (customId != null) outp.Attributes.Add("customId", customId);
+                                    _outPort.Send(outp);
+                                }
                             }
                         }
-                        catch (JsonReaderException) { }
+                        catch (JsonReaderException e) 
+                        {
+                            Console.WriteLine("Exception: " + e.Message);
+                        }
                     }
                 }
             }

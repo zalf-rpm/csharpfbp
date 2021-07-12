@@ -11,7 +11,7 @@ namespace MonicaFlow
         public override void Define()
         {
             //*
-            Component("create_csvs", typeof(CreateMonicaCSV));
+            Component("create_csvs", typeof(MonicaCreateCSV));
             Component("WriteConsole", typeof(WriteToConsole));
             Component("Read__sim.json", typeof(ReadCompleteFile));
             Component("Replace_env_var", typeof(ReplaceEnvVars));
